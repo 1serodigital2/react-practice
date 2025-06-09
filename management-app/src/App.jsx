@@ -2,9 +2,11 @@ import {useState, useRef} from 'react';
 import Aside from "./components/Aside";
 import ProjectForm from './components/ProjectForm';
 import NoProject from './components/NoProject'
+import ProjectData from './components/ProjectData';
 
 function App() {
   const [projects, setProjects] = useState([]);
+  const [individualProjectData, setIndividualProjectData] = useState('');
   const [isAddingProject, setIsAddingProject] = useState(false);
   
   function handleAddProject(){
@@ -33,11 +35,18 @@ function App() {
   }
   console.log("project", projects);
 
+  function transferProjectData(index){
+    setIsAddingProject(false);
+    setIndividualProjectData(projects[index]);
+  }
+  console.log("individual", individualProjectData);
+
   return (
     <div className="flex">
-      <Aside handleAddProject={handleAddProject} projectsData={projects} />
+      <Aside handleAddProject={handleAddProject} projectsData={projects} transferProjectData={transferProjectData}  />
       {isAddingProject && <ProjectForm handleFormData={handleFormData}/>}
-      {!isAddingProject && <NoProject handleAddProject={handleAddProject} />}
+      {!isAddingProject && !individualProjectData && <NoProject handleAddProject={handleAddProject} />}
+      {individualProjectData && <ProjectData individualProjectData={individualProjectData} />}
     </div>
   );
 }
