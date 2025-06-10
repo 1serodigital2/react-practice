@@ -23,6 +23,11 @@ export default function ProjectData({individualProjectData}){
   function deleteTask(index){
     console.log("index", index);
     console.log("project task", projectTsk);
+    setProjectTask((projectTsk) => {
+      projectTsk.splice(projectTsk[index], 1); // Removes 1 element at index 2
+      return [...projectTsk];
+      
+    });
   }
 
   return (
@@ -39,14 +44,16 @@ export default function ProjectData({individualProjectData}){
         <input type="text" name="task" placeholder="Add task here" className="bg-slate-300 h-14 px-6 rounded-lg mr-5 w-80" />
         <button>Add Task</button>
       </form>
-      <ul>
+      {projectTsk <=0 && <p>This project does not have any task</p>}
+      {projectTsk &&  <ul>
         {projectTsk.map((ptask, index) => {
           return (
             <li key={index} className="flex justify-between bg-slate-200 mb-2 p-4 rounded-md"><span>{ptask}</span> <button className='text-red-500' onClick={() => deleteTask(index)}>Delete</button></li>
           )
         })}
-      </ul>
-      <p>This project does not have any task</p>
+      </ul>}
+     
+       
     </div>
   )
 }
