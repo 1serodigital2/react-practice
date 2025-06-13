@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import Header from "./Header";
 import CategoryForm from "./CategoryForm"
 
 export default function Categories({ onAddCategory, categoriesList, onCategoryDelete }) {
@@ -16,10 +16,7 @@ export default function Categories({ onAddCategory, categoriesList, onCategoryDe
 
   return (
     <div className="p-8 w-full">
-      <div className="flex justify-between mb-8">
-        <h2 className="text-4xl font-bold">Categories</h2>
-        <button className="bg-slate-800 text-white rounded-md px-5 py-2 cursor-pointer hover:bg-slate-900" onClick={handleAddCategory}>Add Categories</button>
-      </div>
+      <Header title="Categories" buttonLabel="Add Category" onClick={handleAddCategory} />
       {addCategory && <CategoryForm onAdd={onAddCategory} onClose={handleCloseForm} />}
       {categoriesList.length === 0 && <p className="bg-amber-500 p-2 rounded-xl">Please enter some category</p>}
 

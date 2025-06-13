@@ -8,7 +8,16 @@ import Blogs from "./components/Blogs"
 
 function App() {
   const [activePage, setActivePage] = useState("home");
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
+  const [blogs, setBlogs] = useState([]);
+
+  function handleAddBlog(newBlogData) {
+    setBlogs((prevBlog) => {
+      return [newBlogData, ...prevBlog]
+    })
+
+  }
+  console.log("blogs", blogs);
 
   function handleAddCategory(newCategory) {
     const catId = Math.random().toFixed(2);
@@ -38,7 +47,7 @@ function App() {
   if (activePage === "categories") {
     content = <Categories onAddCategory={handleAddCategory} categoriesList={categories} onCategoryDelete={handleDeleteCategory} />
   } else if (activePage === "blogs") {
-    content = <Blogs />
+    content = <Blogs categoriesList={categories} addNewBlog={handleAddBlog} />
   }
 
 
