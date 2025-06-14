@@ -3,7 +3,8 @@ import Button from "./Button"
 export default function BlogForm({ categoriesList, addNewBlog }) {
   function handleBlogForm(event) {
     event.preventDefault();
-    const formData = new FormData(event.target);
+    const form = event.target;
+    const formData = new FormData(form);
 
     const enteredTitle = formData.get("title");
     const enteredDescription = formData.get("description");
@@ -16,12 +17,13 @@ export default function BlogForm({ categoriesList, addNewBlog }) {
     }
 
     addNewBlog(newBlogData);
+    form.reset();
   }
 
   const inputClasses = "w-full bg-stone-200 outline-0 px-3 py-2";
 
   return (
-    <form action="" onSubmit={handleBlogForm} className="w-[30rem]">
+    <form action="" onSubmit={handleBlogForm} className="w-[30rem] mb-8">
       <div className="mb-3">
         <label htmlFor="">Title</label>
         <input type="text" name="title" className={inputClasses} />
@@ -35,9 +37,9 @@ export default function BlogForm({ categoriesList, addNewBlog }) {
           <label htmlFor="">Select Category</label>
           <select name="category" id="" className={inputClasses}>
             <option value="">--Select Category--</option>
-            {categoriesList.map((category) => {
+            {categoriesList.map((category, index) => {
               return (
-                <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>
+                <option key={index} value={category.categoryId}>{category.categoryName}</option>
               )
             })}
           </select>

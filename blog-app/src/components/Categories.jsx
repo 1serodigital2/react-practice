@@ -1,6 +1,8 @@
 import { useState } from "react"
 import Header from "./Header";
 import CategoryForm from "./CategoryForm"
+import Table from "./Table";
+import NoData from "./NoData";
 
 export default function Categories({ onAddCategory, categoriesList, onCategoryDelete }) {
 
@@ -18,10 +20,10 @@ export default function Categories({ onAddCategory, categoriesList, onCategoryDe
     <div className="p-8 w-full">
       <Header title="Categories" buttonLabel="Add Category" onClick={handleAddCategory} />
       {addCategory && <CategoryForm onAdd={onAddCategory} onClose={handleCloseForm} />}
-      {categoriesList.length === 0 && <p className="bg-amber-500 p-2 rounded-xl">Please enter some category</p>}
+      {categoriesList.length === 0 && <NoData> Please enter some category</NoData>}
 
       {categoriesList.length > 0 && (
-        <table className="w-full border-collapse border border-gray-300">
+        <Table className="w-full border-collapse border border-gray-300">
           <thead className="bg-slate-400">
             <tr>
               <th className="py-4">Sl No</th>
@@ -32,7 +34,7 @@ export default function Categories({ onAddCategory, categoriesList, onCategoryDe
           <tbody>
             {categoriesList.map((category, index) => {
               return (
-                <tr key={category.categoryId}>
+                <tr key={index}>
                   <td className="p-3 text-center">{index + 1}</td>
                   <td className="p-3 text-center">{category.categoryName}</td>
                   <td className="p-3 text-center">
@@ -43,7 +45,7 @@ export default function Categories({ onAddCategory, categoriesList, onCategoryDe
               )
             })}
           </tbody>
-        </table>
+        </Table>
       )}
     </div>
   )

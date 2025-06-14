@@ -17,6 +17,12 @@ function App() {
     })
 
   }
+
+  function handleDeleteBlog(title) {
+    setBlogs((prevBlog) => {
+      return prevBlog.filter((blog) => blog.blogTitle !== title)
+    })
+  }
   console.log("blogs", blogs);
 
   function handleAddCategory(newCategory) {
@@ -47,7 +53,7 @@ function App() {
   if (activePage === "categories") {
     content = <Categories onAddCategory={handleAddCategory} categoriesList={categories} onCategoryDelete={handleDeleteCategory} />
   } else if (activePage === "blogs") {
-    content = <Blogs categoriesList={categories} addNewBlog={handleAddBlog} />
+    content = <Blogs categoriesList={categories} addNewBlog={handleAddBlog} blogList={blogs} handleDeleteBlog={handleDeleteBlog} />
   }
 
 
