@@ -1,11 +1,11 @@
 import { createContext, useState } from "react";
-import { DUMMY_PRODUCTS } from '../dummy-products'
+import { DUMMY_PRODUCTS } from "../dummy-products";
 
 export const CartContext = createContext({
   items: [],
-  addItemToCart: () => { },
-  updateItemToCart: () => { }
-})
+  addItemToCart: () => {},
+  updateItemToCart: () => {},
+});
 
 export default function CartContextProvider({ children }) {
   const [shoppingCart, setShoppingCart] = useState({
@@ -71,8 +71,10 @@ export default function CartContextProvider({ children }) {
   const ctxValue = {
     items: shoppingCart.items,
     addItemToCart: handleAddItemToCart,
-    updateItemToCart: handleUpdateCartItemQuantity
+    updateItemToCart: handleUpdateCartItemQuantity,
   };
 
-  return <CartContext.Provider value={ctxValue}>{children}</CartContext.Provider>
+  return (
+    <CartContext.Provider value={ctxValue}>{children}</CartContext.Provider>
+  );
 }

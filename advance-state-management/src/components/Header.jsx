@@ -1,6 +1,6 @@
-import { useRef, useContext } from 'react';
+import { useRef, useContext } from "react";
 
-import CartModal from './CartModal.jsx';
+import CartModal from "./CartModal.jsx";
 import { CartContext } from "../store/shopping-cart-context";
 
 export default function Header({ cart, onUpdateCartItemQuantity }) {
@@ -26,11 +26,7 @@ export default function Header({ cart, onUpdateCartItemQuantity }) {
 
   return (
     <>
-      <CartModal
-        ref={modal}
-        title="Your Cart"
-        actions={modalActions}
-      />
+      <CartModal ref={modal} title="Your Cart" actions={modalActions} />
       <header id="main-header">
         <div id="main-title">
           <img src="logo.png" alt="Elegant model" />
