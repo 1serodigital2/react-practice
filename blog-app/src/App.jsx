@@ -39,12 +39,13 @@ function App() {
     );
   } else if (activePage === "blogs") {
     content = (
-      <Blogs
-        categoriesList={categories}
-        addNewBlog={handleAddBlog}
-        blogList={blogs}
-        handleDeleteBlog={handleDeleteBlog}
-      />
+      <CategoryContextProvider>
+        <Blogs
+          addNewBlog={handleAddBlog}
+          blogList={blogs}
+          handleDeleteBlog={handleDeleteBlog}
+        />
+      </CategoryContextProvider>
     );
   }
 

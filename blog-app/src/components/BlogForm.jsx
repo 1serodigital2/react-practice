@@ -1,6 +1,10 @@
-import Button from "./Button"
+import { useContext } from "react";
+import { CategoryContext } from "../../blogContext/category-context";
+
+import Button from "./Button";
 
 export default function BlogForm({ categoriesList, addNewBlog }) {
+  const { categoryList } = useContext(CategoryContext);
   function handleBlogForm(event) {
     event.preventDefault();
     const form = event.target;
@@ -8,13 +12,14 @@ export default function BlogForm({ categoriesList, addNewBlog }) {
 
     const enteredTitle = formData.get("title");
     const enteredDescription = formData.get("description");
-    const enteredCategory = categoriesList.length > 0 ? formData.get("category") : undefined;
+    const enteredCategory =
+      categoriesList.length > 0 ? formData.get("category") : undefined;
 
     const newBlogData = {
       blogTitle: enteredTitle,
       blogDescription: enteredDescription,
-      blogCategory: enteredCategory
-    }
+      blogCategory: enteredCategory,
+    };
 
     addNewBlog(newBlogData);
     form.reset();
@@ -32,21 +37,23 @@ export default function BlogForm({ categoriesList, addNewBlog }) {
         <label htmlFor="">Description</label>
         <textarea name="description" id="" className={inputClasses}></textarea>
       </div>
-      {categoriesList.length > 0 && (
+      {categoryList.length > 0 && (
         <div className="mb-3">
           <label htmlFor="">Select Category</label>
           <select name="category" id="" className={inputClasses}>
             <option value="">--Select Category--</option>
-            {categoriesList.map((category, index) => {
+            {categoryList.map((category, index) => {
               return (
-                <option key={index} value={category.categoryId}>{category.categoryName}</option>
-              )
+                <option key={index} value={category.categoryId}>
+                  {category.categoryName}
+                </option>
+              );
             })}
           </select>
         </div>
       )}
 
-      <Button>Submit </ Button>
+      <Button>Submit </Button>
     </form>
-  )
+  );
 }
