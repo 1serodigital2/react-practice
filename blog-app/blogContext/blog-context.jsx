@@ -7,12 +7,15 @@ export const BlogContext = createContext({
 });
 
 const initialBlogState = { blogList: [] };
+
 function blogReducer(state, action) {
+  // const updatedArr = [...state.blogList, action.payload];
   switch (action.type) {
     case "ADD_BLOG":
       return {
         blogList: [action.payload, ...state.blogList],
       };
+    // return { ...state, blogList: updatedArr };
     case "DELETE_BLOG":
       return {
         blogList: state.blogList.filter(
@@ -20,7 +23,7 @@ function blogReducer(state, action) {
         ),
       };
     default:
-      return state;
+      return state.blogList;
   }
 }
 
@@ -31,10 +34,12 @@ export default function BlogContextProvider({ children }) {
   );
 
   function handleAddBlog(newBlogData) {
+    console.log("new blog data", newBlogData, initialBlogState);
     blogStateDispatch({
       type: "ADD_BLOG",
       payload: newBlogData,
     });
+    console.log("new blog data2", newBlogData, initialBlogState);
   }
 
   function handleDeleteBlog(title) {

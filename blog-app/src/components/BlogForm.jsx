@@ -15,7 +15,7 @@ export default function BlogForm({ closeForm }) {
     const enteredTitle = formData.get("title");
     const enteredDescription = formData.get("description");
     const enteredCategory =
-      categoryList.length > 0 ? formData.get("category") : undefined;
+      categoryList?.length > 0 ? formData.get("category") : undefined;
 
     const notValidData =
       enteredTitle == "" || enteredDescription == "" || enteredCategory == "";

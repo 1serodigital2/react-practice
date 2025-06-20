@@ -11,6 +11,8 @@ export default function Blogs() {
   const { blogList, deleteBlog } = useContext(BlogContext);
   const [blogFormActive, setBlogFormActive] = useState(false);
 
+  console.log("blogLIst from Blog.jsx", blogList);
+
   function handleBlogForm() {
     setBlogFormActive((prevState) => !prevState);
   }
@@ -18,8 +20,8 @@ export default function Blogs() {
     <div className="p-8 w-full">
       <Header title="Blogs" buttonLabel="Add Blog" onClick={handleBlogForm} />
       {blogFormActive && <BlogForm closeForm={handleBlogForm} />}
-      {blogList.length === 0 && <NoData>Please enter some blogs</NoData>}
-      {blogList.length > 0 && (
+      {blogList?.length === 0 && <NoData>Please enter some blogs</NoData>}
+      {blogList?.length > 0 && (
         <Table>
           <thead className="bg-slate-400">
             <tr>
@@ -31,7 +33,7 @@ export default function Blogs() {
             </tr>
           </thead>
           <tbody>
-            {blogList.map((blog, index) => {
+            {blogList?.map((blog, index) => {
               const category = categoryList.find(
                 (category) => category.categoryId === blog.blogCategory
               );

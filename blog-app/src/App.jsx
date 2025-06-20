@@ -19,26 +19,20 @@ function App() {
   let content = <WelcomePage onPageChange={handleActivePage} />;
 
   if (activePage === "categories") {
-    content = (
-      <CategoryContextProvider>
-        <Categories />
-      </CategoryContextProvider>
-    );
+    content = <Categories />;
   } else if (activePage === "blogs") {
-    content = (
-      <CategoryContextProvider>
-        <BlogContextProvider>
-          <Blogs />
-        </BlogContextProvider>
-      </CategoryContextProvider>
-    );
+    content = <Blogs />;
   }
 
   return (
-    <div className="flex">
-      <Sidebar onPageChange={handleActivePage} />
-      {content}
-    </div>
+    <CategoryContextProvider>
+      <BlogContextProvider>
+        <div className="flex">
+          <Sidebar onPageChange={handleActivePage} />
+          {content}
+        </div>
+      </BlogContextProvider>
+    </CategoryContextProvider>
   );
 }
 
