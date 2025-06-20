@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CategoryContext } from "../../blogContext/category-context";
 import { BlogContext } from "../../blogContext/blog-context";
 
@@ -6,7 +6,6 @@ import Button from "./Button";
 
 export default function BlogForm({ closeForm }) {
   const { categoryList } = useContext(CategoryContext);
-  const [formStatus, setFormStatus] = useState(false);
   const { addBlog } = useContext(BlogContext);
   function handleBlogForm(event) {
     event.preventDefault();
