@@ -1,10 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CategoryContext } from "../../blogContext/category-context";
+import { BlogContext } from "../../blogContext/blog-context";
 
 import Button from "./Button";
 
-export default function BlogForm({ categoriesList, addNewBlog }) {
+export default function BlogForm({ closeForm }) {
   const { categoryList } = useContext(CategoryContext);
+  const [formStatus, setFormStatus] = useState(false);
+  const { addBlog } = useContext(BlogContext);
   function handleBlogForm(event) {
     event.preventDefault();
     const form = event.target;
@@ -13,7 +16,15 @@ export default function BlogForm({ categoriesList, addNewBlog }) {
     const enteredTitle = formData.get("title");
     const enteredDescription = formData.get("description");
     const enteredCategory =
-      categoriesList.length > 0 ? formData.get("category") : undefined;
+      categoryList.length > 0 ? formData.get("category") : undefined;
+
+    const notValidData =
+      enteredTitle == "" || enteredDescription == "" || enteredCategory == "";
+
+    if (notValidData) {
+      alert("Please fill up the form properly");
+      return;
+    }
 
     const newBlogData = {
       blogTitle: enteredTitle,
@@ -21,7 +32,7 @@ export default function BlogForm({ categoriesList, addNewBlog }) {
       blogCategory: enteredCategory,
     };
 
-    addNewBlog(newBlogData);
+    addBlog(newBlogData);
     form.reset();
   }
 
@@ -53,6 +64,15 @@ export default function BlogForm({ categoriesList, addNewBlog }) {
         </div>
       )}
 
+      <Button
+        type="button"
+        style={{
+          marginRight: "10px",
+        }}
+        onClick={closeForm}
+      >
+        Close
+      </Button>
       <Button>Submit </Button>
     </form>
   );
