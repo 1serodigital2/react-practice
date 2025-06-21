@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
 
 export const CategoryContext = createContext({
   categoryList: [],
@@ -6,30 +6,49 @@ export const CategoryContext = createContext({
   deleteCategory: () => {},
 });
 
+const initialState = { categoryList: [] };
+function catReducer(state, action) {
+  switch (action.type) {
+    case "ADD_CATEGORY":
+      return {
+        categoryList: [action.payload, ...state.categoryList],
+      };
+    case "DELETE_CATEGORY":
+      return {
+        categoryList: state.categoryList.filter(
+          (category) => category.categoryId !== action.payload
+        ),
+      };
+    default:
+      break;
+  }
+}
+
 export default function CategoryContextProvider({ children }) {
-  const [categories, setCategories] = useState([]);
+  const [categoryState, categoryStateDispatch] = useReducer(
+    catReducer,
+    initialState
+  );
 
   function handleAddCategory(newCategory) {
-    const catId = Math.random().toFixed(2);
-    const newCat = {
-      categoryName: newCategory,
-      categoryId: catId,
-    };
-    setCategories((prevState) => {
-      return [newCat, ...prevState];
+    categoryStateDispatch({
+      type: "ADD_CATEGORY",
+      payload: {
+        categoryName: newCategory,
+        categoryId: Math.random().toFixed(2),
+      },
     });
   }
 
   function handleDeleteCategory(id) {
-    setCategories((prevState) => {
-      return prevState.filter((oldCat) => oldCat.categoryId !== id);
+    categoryStateDispatch({
+      type: "DELETE_CATEGORY",
+      payload: id,
     });
   }
 
-  console.log("categories", categories);
-
   const catCtxt = {
-    categoryList: categories,
+    categoryList: categoryState.categoryList,
     addCategory: handleAddCategory,
     deleteCategory: handleDeleteCategory,
   };

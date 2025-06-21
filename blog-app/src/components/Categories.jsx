@@ -9,6 +9,7 @@ export default function Categories() {
   const [addCategory, setAddCategory] = useState(false);
   const { categoryList, deleteCategory } = useContext(CategoryContext);
 
+  console.log("category.jsx", categoryList);
   function handleAddCategory() {
     setAddCategory(true);
   }
@@ -25,11 +26,11 @@ export default function Categories() {
         onClick={handleAddCategory}
       />
       {addCategory && <CategoryForm onClose={handleCloseForm} />}
-      {categoryList.length === 0 && (
+      {categoryList?.length === 0 && (
         <NoData> Please enter some category</NoData>
       )}
 
-      {categoryList.length > 0 && (
+      {categoryList?.length > 0 && (
         <Table className="w-full border-collapse border border-gray-300">
           <thead className="bg-slate-400">
             <tr>

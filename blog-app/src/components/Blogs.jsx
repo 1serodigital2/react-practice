@@ -34,7 +34,7 @@ export default function Blogs() {
           </thead>
           <tbody>
             {blogList?.map((blog, index) => {
-              const category = categoryList.find(
+              const category = categoryList?.find(
                 (category) => category.categoryId === blog.blogCategory
               );
               return (
