@@ -7,9 +7,9 @@ import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
 import logoImg from "./assets/logo.png";
 import { sortPlacesByDistance } from "./loc.js";
 
-const storeIds = JSON.parse(localStorage.getItem("storeIds"));
+const storeIds = JSON.parse(localStorage.getItem("storeIds")) || [];
 
-const storedPlaces = storeIds.map((id) =>
+const storedPlaces = storeIds?.map((id) =>
   AVAILABLE_PLACES.find((place) => place.id === id)
 );
 
@@ -43,7 +43,7 @@ function App() {
 
   function handleSelectPlace(id) {
     setPickedPlaces((prevPickedPlaces) => {
-      if (prevPickedPlaces.some((place) => place.id === id)) {
+      if (prevPickedPlaces?.some((place) => place.id === id)) {
         return prevPickedPlaces;
       }
       const place = AVAILABLE_PLACES.find((place) => place.id === id);
