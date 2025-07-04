@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { act, useCallback, useState } from "react";
 import QUESTIONS from "../questions";
 import QuizTimer from "./QuizTimer";
 import quizCompletedImg from "../assets/quiz-complete.png";
@@ -24,25 +24,12 @@ export default function Quiz() {
 
   const handleSelectedAnswer = useCallback(
     function handleSelectedAnswer(selectedAnswer) {
-      setAnswerState("answered");
       setUserAnswers((prevSelectedAnswers) => {
         return [...prevSelectedAnswers, selectedAnswer];
       });
-      setTimeout(() => {
-        if (selectedAnswer === QUESTIONS[activeQuestionIndex].answers[0]) {
-          setAnswerState("correct");
-        } else {
-          setAnswerState("wrong");
-        }
-
-        setTimeout(() => {
-          setAnswerState("");
-        }, 2000);
-      }, 1000);
-      console.log("answerState", answerState);
     },
 
-    [activeQuestionIndex]
+    []
   );
 
   const handleSkipAnswer = useCallback(
@@ -54,11 +41,8 @@ export default function Quiz() {
     <div id="quiz">
       <Question
         key={activeQuestionIndex}
-        questionText={QUESTIONS[activeQuestionIndex].text}
-        answers={QUESTIONS[activeQuestionIndex].answers}
+        index={activeQuestionIndex}
         onSelectAnswer={handleSelectedAnswer}
-        selectedAnswer={userAnswers[userAnswers.length - 1]}
-        answerState={answerState}
         onSkipAnswer={handleSkipAnswer}
       />
     </div>
