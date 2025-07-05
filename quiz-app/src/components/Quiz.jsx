@@ -1,26 +1,12 @@
-import { act, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import QUESTIONS from "../questions";
-import QuizTimer from "./QuizTimer";
-import quizCompletedImg from "../assets/quiz-complete.png";
-import Answers from "./Answers";
+import Summary from "./Summary";
 import Question from "./Question";
 
 export default function Quiz() {
-  const [answerState, setAnswerState] = useState("");
   const [userAnswers, setUserAnswers] = useState([]);
-  const activeQuestionIndex =
-    answerState === "" ? userAnswers.length : userAnswers.length - 1;
-
+  const activeQuestionIndex = userAnswers.length;
   const isQuizComplete = activeQuestionIndex === QUESTIONS.length;
-
-  if (isQuizComplete) {
-    return (
-      <div id="summary">
-        <img src={quizCompletedImg} alt="" />
-        <h2>Quiz Completed</h2>
-      </div>
-    );
-  }
 
   const handleSelectedAnswer = useCallback(
     function handleSelectedAnswer(selectedAnswer) {
@@ -36,6 +22,11 @@ export default function Quiz() {
     () => handleSelectedAnswer(null),
     [handleSelectedAnswer]
   );
+
+  console.log("isQuizComplete", isQuizComplete);
+  if (isQuizComplete) {
+    return <Summary userAnswers={userAnswers} />;
+  }
 
   return (
     <div id="quiz">

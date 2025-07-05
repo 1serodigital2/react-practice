@@ -8,6 +8,15 @@ export default function Question({ onSelectAnswer, onSkipAnswer, index }) {
     selectedAnswer: "",
     isCorrect: null,
   });
+
+  let timer = 10000;
+  if (answer.selectedAnswer) {
+    timer = 1000;
+  }
+
+  if (answer.isCorrect !== null) {
+    timer = 2000;
+  }
   function handleSelectedAnswer(answerSelected) {
     setAnswer({
       selectedAnswer: answerSelected,
@@ -28,12 +37,19 @@ export default function Question({ onSelectAnswer, onSkipAnswer, index }) {
 
   let answerState = "";
 
-  if (answer.selectedAnswer) {
+  if (answer.selectedAnswer && answer.isCorrect !== null) {
     answerState = answer.isCorrect ? "correct" : "wrong";
+  } else if (answer.selectedAnswer) {
+    answerState = "answered";
   }
   return (
     <div id="question">
-      <QuizTimer timeout={10000} onTimeOut={onSkipAnswer} />
+      <QuizTimer
+        key={timer}
+        timeout={timer}
+        onTimeOut={answer.selectedAnswer === "" ? onSkipAnswer : null}
+        mode={answerState}
+      />
       <h2>{QUESTIONS[index].text}</h2>
       <Answers
         answers={QUESTIONS[index].answers}
