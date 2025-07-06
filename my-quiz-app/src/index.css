@@ -4,3 +4,14 @@ body{
    padding: 2rem;
    background-color: #1c1c1c
 }
+
+#answers li button.answered{
+   background-color: rgb(255, 187, 0);
+}
+#answers li button.correct{
+   background-color: rgb(16, 148, 16);
+}
+#answers li button.wrong{
+   background-color: rgb(184, 35, 35);
+   color: white;
+}
