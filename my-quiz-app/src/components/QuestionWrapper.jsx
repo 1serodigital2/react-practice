@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
 
 import QUESTIONS from "../questions";
+import Answers from "./Answers";
+import ProgressBar from "./ProgressBar";
 
 export default function QuestionWrapper() {
   const [userTotalAnswers, setUserTotalAnswers] = useState([]);
@@ -25,21 +27,12 @@ export default function QuestionWrapper() {
     );
   }
 
-  const shuffledAnswers = useMemo(() => {
-    return [...QUESTIONS[activeQuestionIndex]?.answers].sort(
-      () => Math.random() - 0.5
-    );
-  }, [activeQuestionIndex]);
-
-  console.log("shuffledAnswers.current", shuffledAnswers.current);
-
-  function handleSelectedAnswer(answer, answerIndex) {
+  function handleSelectedAnswer(answer) {
     setUserAnswer({
       selectedAnswer: answer,
       isCorrect: null,
     });
 
-    console.log("userAnswer", userAnswer);
     setTimeout(() => {
       setUserAnswer({
         selectedAnswer: answer,
@@ -52,51 +45,23 @@ export default function QuestionWrapper() {
         });
       }, 2000);
     }, 2000);
-
-    console.log("userAnswer", userAnswer);
   }
-
-  let answerState = "";
-
-  if (userAnswer.selectedAnswer && userAnswer.isCorrect !== null) {
-    answerState = userAnswer.isCorrect ? " correct" : " wrong";
-  } else if (userAnswer.selectedAnswer !== "") {
-    answerState = " answered";
-  }
-  console.log("answerState", answerState);
   return (
     <div
       id="question"
       className="bg-stone-700 max-w-3xl mr-auto ml-auto mt-8 rounded-2xl p-8"
     >
-      <progress
-        value="32"
-        max="100"
-        className="w-full pl-3 pr-3 mb-3 rounded-3xl"
-      />
+      <ProgressBar />
       <div className="question">
         <h2 className="mb-8 text-white text-2xl">
           {QUESTIONS[activeQuestionIndex].text}
         </h2>
-        <ul id="answers">
-          {shuffledAnswers.map((answer, index) => {
-            let cssClass = "";
-            const isSelected = userAnswer.selectedAnswer === answer;
-            if (answerState && isSelected) {
-              cssClass = answerState;
-            }
-            return (
-              <li key={index}>
-                <button
-                  onClick={() => handleSelectedAnswer(answer)}
-                  className={`cursor-pointer bg-stone-400 w-full rounded-3xl py-2 px-4 text-left mb-3 ${cssClass}`}
-                >
-                  {answer}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        <Answers
+          answers={QUESTIONS[activeQuestionIndex]?.answers}
+          onSelect={handleSelectedAnswer}
+          index={activeQuestionIndex}
+          selectedAnswerState={userAnswer}
+        />
       </div>
     </div>
   );
