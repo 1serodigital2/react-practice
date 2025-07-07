@@ -38,12 +38,14 @@ export default function QuestionWrapper() {
     setTimeout(() => {
       setUserAnswer({
         selectedAnswer: answer,
-        isCorrect: QUESTIONS[answerIndex].answers[0] === answer,
+        isCorrect: QUESTIONS[activeQuestionIndex].answers[0] === answer,
       });
 
-      setUserTotalAnswers((userPrevAnswers) => {
-        return [...userPrevAnswers, userAnswer];
-      });
+      setTimeout(() => {
+        setUserTotalAnswers((userPrevAnswers) => {
+          return [...userPrevAnswers, userAnswer];
+        });
+      }, 2000);
     }, 2000);
 
     console.log("userAnswer", userAnswer);
@@ -51,7 +53,7 @@ export default function QuestionWrapper() {
 
   let answerState = "";
 
-  if (userAnswer.selectedAnswer && userAnswer.selectedAnswer !== null) {
+  if (userAnswer.selectedAnswer && userAnswer.isCorrect !== null) {
     answerState = userAnswer.isCorrect ? " correct" : " wrong";
   } else if (userAnswer.selectedAnswer !== "") {
     answerState = " answered";
@@ -81,7 +83,7 @@ export default function QuestionWrapper() {
             return (
               <li key={index}>
                 <button
-                  onClick={() => handleSelectedAnswer(answer, index)}
+                  onClick={() => handleSelectedAnswer(answer)}
                   className={`cursor-pointer bg-stone-400 w-full rounded-3xl py-2 px-4 text-left mb-3 ${cssClass}`}
                 >
                   {answer}
