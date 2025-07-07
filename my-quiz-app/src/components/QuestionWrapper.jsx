@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 import QUESTIONS from "../questions";
 
@@ -25,8 +25,13 @@ export default function QuestionWrapper() {
     );
   }
 
-  const shuffledAnswers = [...QUESTIONS[activeQuestionIndex]?.answers];
-  shuffledAnswers.sort(() => Math.random() - 0.5);
+  const shuffledAnswers = useMemo(() => {
+    return [...QUESTIONS[activeQuestionIndex]?.answers].sort(
+      () => Math.random() - 0.5
+    );
+  }, [activeQuestionIndex]);
+
+  console.log("shuffledAnswers.current", shuffledAnswers.current);
 
   function handleSelectedAnswer(answer, answerIndex) {
     setUserAnswer({
