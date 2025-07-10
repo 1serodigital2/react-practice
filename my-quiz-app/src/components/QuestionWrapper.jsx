@@ -12,6 +12,7 @@ export default function QuestionWrapper() {
   });
 
   console.log("isCorrect", userAnswer.isCorrect);
+  console.log("selectedAnswer", userAnswer.selectedAnswer);
 
   const activeQuestionIndex = userTotalAnswers.length;
 
@@ -27,7 +28,15 @@ export default function QuestionWrapper() {
     );
   }
 
-  function handleSelectedAnswer(answer) {
+  const handleSelectedAnswer = useCallback(function handleSelectedAnswer(
+    answer
+  ) {
+    if (answer === null) {
+      setUserTotalAnswers((userPrevAnswers) => {
+        return [...userPrevAnswers, userAnswer];
+      });
+      return;
+    }
     setUserAnswer({
       selectedAnswer: answer,
       isCorrect: null,
@@ -45,22 +54,23 @@ export default function QuestionWrapper() {
         });
       }, 2000);
     }, 2000);
-  }
+  },
+  []);
 
   const handleSkipAnswer = useCallback(() => {
     handleSelectedAnswer(null);
   }, [handleSelectedAnswer]);
-
   return (
     <div
       id="question"
       className="bg-stone-700 max-w-3xl mr-auto ml-auto mt-8 rounded-2xl p-8"
     >
       <ProgressBar
+        key={activeQuestionIndex}
         timeout={10000}
-        onTimeout={userAnswer.selectedAnswer === "" ? handleSkipAnswer : null}
+        onTimeout={handleSkipAnswer}
       />
-      <div className="question">
+      <div className="quetion">
         <h2 className="mb-8 text-white text-2xl">
           {QUESTIONS[activeQuestionIndex].text}
         </h2>
