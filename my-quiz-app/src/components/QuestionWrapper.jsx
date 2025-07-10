@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import QUESTIONS from "../questions";
 import Answers from "./Answers";
@@ -47,19 +47,18 @@ export default function QuestionWrapper() {
     }, 2000);
   }
 
-  function handleSkipQuestion() {
+  const handleSkipAnswer = useCallback(() => {
     handleSelectedAnswer(null);
-  }
+  }, [handleSelectedAnswer]);
 
-  const TIMER = 10000;
   return (
     <div
       id="question"
       className="bg-stone-700 max-w-3xl mr-auto ml-auto mt-8 rounded-2xl p-8"
     >
       <ProgressBar
-        timeout={TIMER}
-        onTimeout={userAnswer.selectedAnswer === "" ? handleSkipQuestion : null}
+        timeout={10000}
+        onTimeout={userAnswer.selectedAnswer === "" ? handleSkipAnswer : null}
       />
       <div className="question">
         <h2 className="mb-8 text-white text-2xl">

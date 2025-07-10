@@ -12,7 +12,7 @@ export default function ProgressBar({ timeout, onTimeout }) {
   }, [onTimeout, timeout]);
 
   useEffect(() => {
-    console.log("remainign Time", remainingTime);
+    console.log("setting interval");
     const timer = setInterval(() => {
       setRemainingTime((prevTime) => prevTime - 10);
     }, 10);
