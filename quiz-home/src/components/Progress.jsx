@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const Progress = ({ timeout, onTimout, index }) => {
+const Progress = ({ timeout, onTimout }) => {
   const [remainingTime, setRemainingTime] = useState(timeout);
   console.log("timeout", timeout);
 
@@ -14,16 +14,11 @@ const Progress = ({ timeout, onTimout, index }) => {
   }, [timeout, onTimout]);
 
   useEffect(() => {
-    console.log("setting interval");
-    console.log("remaining time", remainingTime);
     const interval = setInterval(() => {
-      setRemainingTime((prevTime) => prevTime - 100);
+      setRemainingTime((prev) => Math.max(0, prev - 100));
     }, 100);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
+    return () => clearInterval(interval);
+  }, [timeout]);
   return (
     <progress
       value={remainingTime}

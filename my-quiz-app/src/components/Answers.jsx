@@ -8,7 +8,7 @@ export default function Answers({
 }) {
   const shuffledAnswers = useMemo(() => {
     return [...answers].sort(() => Math.random() - 0.5);
-  }, [index]);
+  }, [answers]);
 
   let answerState = "";
 

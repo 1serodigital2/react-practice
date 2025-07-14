@@ -28,34 +28,42 @@ export default function QuestionWrapper() {
     );
   }
 
-  const handleSelectedAnswer = useCallback(function handleSelectedAnswer(
-    answer
-  ) {
-    if (answer === null) {
-      setUserTotalAnswers((userPrevAnswers) => {
-        return [...userPrevAnswers, userAnswer];
-      });
-      return;
-    }
-    setUserAnswer({
-      selectedAnswer: answer,
-      isCorrect: null,
-    });
-
-    setTimeout(() => {
+  const handleSelectedAnswer = useCallback(
+    function handleSelectedAnswer(answer) {
+      if (answer === null) {
+        setUserTotalAnswers((prev) => [
+          ...prev,
+          { selectedAnswer: "", isCorrect: false },
+        ]);
+        setUserAnswer({ selectedAnswer: "", isCorrect: null });
+        return;
+      }
       setUserAnswer({
         selectedAnswer: answer,
-        isCorrect: QUESTIONS[activeQuestionIndex].answers[0] === answer,
+        isCorrect: null,
       });
 
       setTimeout(() => {
-        setUserTotalAnswers((userPrevAnswers) => {
-          return [...userPrevAnswers, userAnswer];
+        setUserAnswer({
+          selectedAnswer: answer,
+          isCorrect: QUESTIONS[activeQuestionIndex].answers[0] === answer,
         });
+
+        setTimeout(() => {
+          setUserTotalAnswers((userPrevAnswers) => {
+            return [...userPrevAnswers, userAnswer];
+          });
+        }, 2000);
       }, 2000);
-    }, 2000);
-  },
-  []);
+    },
+    [activeQuestionIndex]
+  );
+
+  // Calculate TIMER based on current state
+  const TIMER =
+    userAnswer.selectedAnswer !== "" && userAnswer.isCorrect === null
+      ? 4000
+      : 10000;
 
   const handleSkipAnswer = useCallback(() => {
     handleSelectedAnswer(null);
@@ -67,7 +75,7 @@ export default function QuestionWrapper() {
     >
       <ProgressBar
         key={activeQuestionIndex}
-        timeout={10000}
+        timeout={TIMER}
         onTimeout={handleSkipAnswer}
       />
       <div className="quetion">

@@ -22,8 +22,6 @@ const QuizWrapper = () => {
     );
   }
 
-  let timer = 10000;
-
   function handleSelectedAnswer(answer) {
     if (answer === null) {
       setuserTotalAnswer((prevAnswer) => {
@@ -36,59 +34,60 @@ const QuizWrapper = () => {
       isCorrect: null,
     });
 
-    console.log("selected answer", selectedAnswer);
     setTimeout(() => {
-      setSelectedAnswer((answer) => {
-        return {
-          selectedAnswer: answer,
-          isCorrect: QUESTIONS[activeQuestionIndex].answers[0] === answer,
-        };
+      setSelectedAnswer({
+        selectedAnswer: answer,
+        isCorrect: QUESTIONS[activeQuestionIndex].answers[0] === answer,
       });
 
       setTimeout(() => {
-        setuserTotalAnswer((prevAnswer) => {
-          return [...prevAnswer, answer];
+        setuserTotalAnswer((prevAnswer) => [...prevAnswer, answer]);
+        setSelectedAnswer({
+          selectedAnswer: "",
+          isCorrect: null,
         });
-        console.log("total answer", userTotalAnswer);
-      }, 2000);
+      }, 1000);
     }, 2000);
   }
-
-  // const handleSelectedAnswer = useCallback((answer) => {
-  //   setuserTotalAnswer((prevAnswer) => {
-  //     return [...prevAnswer, answer];
-  //   });
-  // });
 
   function handleSkipAnswer() {
     handleSelectedAnswer(null);
   }
-  // const handleSkipAnswer = useCallback(() => {
-  //   handleSelectedAnswer(null);
-  // });
 
-  let answerState = "test";
+  let currentTimeout = 10000;
+  if (
+    selectedAnswer.selectedAnswer !== "" &&
+    selectedAnswer.isCorrect === null
+  ) {
+    currentTimeout = 2000;
+  } else if (selectedAnswer.isCorrect !== null) {
+    currentTimeout = 1000;
+  }
+
+  let answerState = "";
   if (selectedAnswer.selectedAnswer && selectedAnswer.isCorrect !== null) {
     answerState = selectedAnswer.isCorrect ? "correct" : "wrong";
-    // timer = 2000;
   } else if (selectedAnswer.selectedAnswer) {
     answerState = "answered";
-    // timer = 2000;
+  } else {
+    answerState = "";
   }
 
   console.log("quiz answerstate", answerState);
   return (
     <div className="max-w-5xl mx-auto bg-gray-900 rounded-3xl p-6 text-left">
       <Progress
-        timeout={timer}
-        onTimout={handleSkipAnswer}
-        key={activeQuestionIndex}
+        timeout={currentTimeout}
+        onTimout={
+          selectedAnswer.selectedAnswer === "" ? handleSkipAnswer : null
+        }
+        key={`progress-${currentTimeout}-${activeQuestionIndex}`}
       />
       <h2 className="text-3xl font-semibold mb-7">
         {QUESTIONS[activeQuestionIndex].text}
       </h2>
       <Answers
-        // key={activeQuestionIndex}
+        key={`answer-${activeQuestionIndex}`}
         activeQuestionIndex={activeQuestionIndex}
         onSelect={handleSelectedAnswer}
         answerState={answerState}
