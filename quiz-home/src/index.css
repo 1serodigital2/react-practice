@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  margin: 0;
+}
+/* Base Progress Bar Styles */
+progress {
+  width: 100%;
+  border-radius: 1rem; /* rounded-2xl */
+}
+
+progress::-webkit-progress-bar {
+  border-radius: 1rem;
+  background-color: #f3f4f6; /* bg-gray-100 */
+}
+
+/* Default (blue) */
+progress::-webkit-progress-value {
+  border-radius: 1rem;
+  background-color: #3b82f6; /* bg-blue-500 */
+}
+
+progress::-moz-progress-bar {
+  border-radius: 1rem;
+  background-color: #3b82f6; /* bg-blue-500 */
+}
+
+/* Correct Answer (green) */
+progress.correct::-webkit-progress-value {
+  background-color: #10b981; /* bg-emerald-500 */
+}
+
+progress.correct::-moz-progress-bar {
+  background-color: #10b981; /* bg-emerald-500 */
+}
+
+/* Wrong Answer (red) */
+progress.wrong::-webkit-progress-value {
+  background-color: #ef4444; /* bg-red-500 */
+}
+
+progress.wrong::-moz-progress-bar {
+  background-color: #ef4444; /* bg-red-500 */
+}
+/* When 'answered' class is applied (yellow) */
+progress.answered::-webkit-progress-value {
+  background-color: #eab308; /* bg-yellow-500 */
+}
+
+progress.answered::-moz-progress-bar {
+  background-color: #eab308; /* bg-yellow-500 */
+}
+
+.answer button.correct{
+  background-color: #10b981;
+}
+.answer button.wrong{
+  background-color: #ef4444;
+}
+.answer button.answered{
+  background-color: #eab308;
+}
+.answer button:disabled{
+  opacity: 0.4;
+}
