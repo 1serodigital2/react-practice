@@ -1,7 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import Answers from "./Answers";
 import QUESTIONS from "../questions";
 import Progress from "./Progress";
+import QuizSummary from "./QuizSummary";
 
 const QuizWrapper = () => {
   const [userTotalAnswer, setuserTotalAnswer] = useState([]);
@@ -16,9 +17,12 @@ const QuizWrapper = () => {
 
   if (isQuizComplete) {
     return (
-      <h2 className="text-3xl font-bold text-white p-3 rounded bg-stone-500">
-        Quiz Complete
-      </h2>
+      <>
+        <h2 className="text-3xl font-bold text-white p-3 rounded bg-stone-500">
+          Quiz Complete
+        </h2>
+        <QuizSummary answerSummary={userTotalAnswer} />
+      </>
     );
   }
 
@@ -73,7 +77,6 @@ const QuizWrapper = () => {
     answerState = "";
   }
 
-  console.log("quiz answerstate", answerState);
   return (
     <div className="max-w-5xl mx-auto bg-gray-900 rounded-3xl p-6 text-left">
       <Progress

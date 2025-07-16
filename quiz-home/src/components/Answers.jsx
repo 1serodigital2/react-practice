@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 
 import QUESTIONS from "../questions";
 
@@ -8,19 +8,12 @@ const Answers = ({
   answerState,
   selectedAnswer,
 }) => {
-  console.log("ans selected", selectedAnswer);
   const shuffleAnswer = useRef();
 
   if (!shuffleAnswer.current) {
     shuffleAnswer.current = [...QUESTIONS[activeQuestionIndex].answers];
     shuffleAnswer.current.sort(() => Math.random() - 0.5);
   }
-
-  // const shuffleAnswer = [...QUESTIONS[activeQuestionIndex].answers];
-  // console.log("aswerstate", answerState);
-  // shuffleAnswer.sort(() => Math.random() - 0.5);
-  // if (answerState == "") {
-  // }
 
   return (
     <ul className="answers">
@@ -36,7 +29,6 @@ const Answers = ({
                 cssClass
               }
               onClick={() => onSelect(answer)}
-              // disabled={answerState !== ""}
             >
               {answer}
             </button>
