@@ -10,14 +10,23 @@ export default function AvailablePlaces({ onSelectPlace }) {
   const [error, setError] = useState();
 
   useEffect(() => {
+    console.log("Fetching available places...");
     async function fetchPlaces() {
+      console.log("inside fetchPlaces");
       setIsFetching(true);
       try {
-        const places = await fetchAvailablePlaces();
+        console.log("inside trycatch");
+
+        // const places = await fetchAvailablePlaces();
+
+        // console.log("fetched places", places);
+        const places = await fetch("http://localhost:3000/places");
+        const resData = await places.json();
+        console.log("available places", resData);
 
         navigator.geolocation.getCurrentPosition((position) => {
           const sortedPlaces = sortPlacesByDistance(
-            places,
+            resData.places,
             position.coords.latitude,
             position.coords.longitude
           );

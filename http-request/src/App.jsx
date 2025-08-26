@@ -1,19 +1,40 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 
 import Places from "./components/Places.jsx";
 import Modal from "./components/Modal.jsx";
 import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
 import logoImg from "./assets/logo.png";
 import AvailablePlaces from "./components/AvailablePlaces.jsx";
-import { updateUserPlaces } from "./http.js";
+import { updateUserPlaces, fetchUserPlaces } from "./http.js";
 
 function App() {
   const selectedPlace = useRef();
 
+  const [isFetching, setIsFetching] = useState(false);
   const [userPlaces, setUserPlaces] = useState([]);
+  const [error, setError] = useState();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [errorUpdatingPlaces, setErrorUpdatingPlaces] = useState();
+
+  useEffect(() => {
+    async function loadUserPlaces() {
+      setIsFetching(true);
+      try {
+        const userPlaces = await fetchUserPlaces();
+        console.log("userPlaces", userPlaces);
+        setUserPlaces(userPlaces);
+      } catch (error) {
+        setError({
+          message:
+            error.message || "Something went wrong while fetching places",
+        });
+      } finally {
+        setIsFetching(false);
+      }
+    }
+    loadUserPlaces();
+  }, []);
 
   function handleStartRemovePlace(place) {
     setModalIsOpen(true);
@@ -105,6 +126,8 @@ function App() {
           fallbackText="Select the places you would like to visit below."
           places={userPlaces}
           onSelectPlace={handleStartRemovePlace}
+          isLoading={isFetching}
+          loadingText={error ? error.message : "No places added yet."}
         />
 
         <AvailablePlaces onSelectPlace={handleSelectPlace} />
