@@ -17,10 +17,6 @@ export default function AvailablePlaces({ onSelectPlace }) {
       try {
         const places = await fetchPlacesResponse();
 
-        if (!places) {
-          throw new Error("Could not fetch places.");
-        }
-
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const sortedPlaces = sortPlacesByDistance(
