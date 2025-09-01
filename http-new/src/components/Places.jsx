@@ -1,7 +1,16 @@
-export default function Places({ title, places, fallbackText, onSelectPlace }) {
+export default function Places({
+  title,
+  places,
+  fallbackText,
+  onSelectPlace,
+  error,
+  isLoading,
+}) {
   return (
     <section className="places-category">
       <h2>{title}</h2>
+      {isLoading && <p>Loading...</p>}
+      {error && <p className="error-text">{error.message}</p>}
       {places.length === 0 && <p className="fallback-text">{fallbackText}</p>}
       {places.length > 0 && (
         <ul className="places">
