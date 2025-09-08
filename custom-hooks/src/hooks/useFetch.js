@@ -25,5 +25,6 @@ export function useFetch(fetchFn) {
     isFetching,
     userPlaces,
     error,
+    setUserPlaces,
   };
 }
