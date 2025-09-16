@@ -6,40 +6,29 @@ import { sortPlacesByDistance } from "../loc.js";
 import { fetchAvailablePlaces } from "../http.js";
 import { useFetch } from "../hooks/useFetch.js";
 
+async function fetchSortedPlaces() {
+  const places = await fetchAvailablePlaces();
+
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const sortedPlaces = sortPlacesByDistance(
+        places,
+        position.coords.latitude,
+        position.coords.longitude
+      );
+      resolve(sortedPlaces);
+    });
+  });
+}
+
 export default function AvailablePlaces({ onSelectPlace }) {
-  // const [isFetching, setIsFetching] = useState(false);
-  // const [availablePlaces, setAvailablePlaces] = useState([]);
-  // const [error, setError] = useState();
+  const avPlaces = useFetch(fetchSortedPlaces, []);
 
-  const {
-    isFetching,
-    error,
-    userPlaces: availablePlaces,
-    setUserPlaces: setAvailablePlaces,
-    setIsFetching,
-  } = useFetch(fetchAvailablePlaces);
+  const { isFetching, error, userPlaces: availablePlaces } = avPlaces;
 
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     const sortedPlaces = sortPlacesByDistance(
-  //       availablePlaces,
-  //       position.coords.latitude,
-  //       position.coords.longitude
-  //     );
-  //     setAvailablePlaces(sortedPlaces);
-  //     setIsFetching(false);
-  //   });
-  // }, [availablePlaces, setAvailablePlaces, setIsFetching]);
-
-  // navigator.geolocation.getCurrentPosition((position) => {
-  //   const sortedPlaces = sortPlacesByDistance(
-  //     availablePlaces,
-  //     position.coords.latitude,
-  //     position.coords.longitude
-  //   );
-  //   setAvailablePlaces(sortedPlaces);
-  //   setIsFetching(false);
-  // });
+  // console.log(" avPlaces fetched:", avPlaces);
+  // console.log(" availablePlaces fetched:", availablePlaces);
+  // console.log(" isFetching fetched:", isFetching);
 
   if (error) {
     return <Error title="An error occurred!" message={error.message} />;
