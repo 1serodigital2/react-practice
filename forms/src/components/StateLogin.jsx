@@ -2,15 +2,28 @@ import { useState } from "react";
 
 export default function Login() {
   const [eneteredValues, setEnteredValues] = useState({
-    email: "",
-    password: "",
+    email: {
+      value: "",
+      valid: "",
+    },
+    password: {
+      value: "",
+      valid: "",
+    },
   });
+
+  function emailValidation(email) {
+    const validateEmail = email != "" && !email.includes("@");
+  }
 
   function handleInputChange(identifier, value) {
     setEnteredValues((prevValue) => ({
       ...prevValue,
-      [identifier]: value,
+      [identifier]: {
+        value: value,
+      },
     }));
+    console.log(eneteredValues);
   }
 
   function handleSubmit(event) {
@@ -19,7 +32,10 @@ export default function Login() {
   }
 
   function clearForm() {
-    setEnteredValues({ email: "", password: "" });
+    setEnteredValues({
+      email: { value: "", valid: "" },
+      password: { value: "", valid: "" },
+    });
   }
 
   return (
@@ -34,8 +50,12 @@ export default function Login() {
             type="email"
             name="email"
             onChange={(event) => handleInputChange("email", event.target.value)}
-            value={eneteredValues.email}
+            onBlur={() => emailValidation(eneteredValues.email)}
+            value={eneteredValues.email.value}
           />
+          {/* <div className="control-error">
+            {validateEmail && <p>Please enter valid email address</p>}
+          </div> */}
         </div>
 
         <div className="control no-margin">
@@ -47,7 +67,7 @@ export default function Login() {
             onChange={(event) =>
               handleInputChange("password", event.target.value)
             }
-            value={eneteredValues.password}
+            value={eneteredValues.password.value}
           />
         </div>
       </div>
