@@ -1,40 +1,94 @@
 import { useState } from "react";
 
 export default function Login() {
-  const [eneteredValues, setEnteredValues] = useState({
-    email: {
-      value: "",
-      valid: "",
-    },
-    password: {
-      value: "",
-      valid: "",
-    },
+  const [enteredValues, setEnteredValues] = useState({
+    email: "",
+    password: "",
   });
-
-  function emailValidation(email) {
-    const validateEmail = email != "" && !email.includes("@");
-  }
 
   function handleInputChange(identifier, value) {
     setEnteredValues((prevValue) => ({
       ...prevValue,
-      [identifier]: {
-        value: value,
-      },
+      [identifier]: value,
     }));
-    console.log(eneteredValues);
   }
+  function handleInputBlur(identifier, inputValue) {
+    // const value = inputValue ?? "";
+    // const valueNotEmpty = inputValue != "";
+    // const trimmed = value.trim();
+
+    // let errorText = "";
+
+    // if (identifier === "email" && valueNotEmpty) {
+    //   if (trimmed === "") {
+    //     errorText = "Email is required";
+    //   } else if (!trimmed.includes("@")) {
+    //     errorText = "Invalid email";
+    //   }
+    // }
+
+    // if (identifier === "password" && valueNotEmpty) {
+    //   if (trimmed === "") {
+    //     errorText = "Password is required";
+    //   } else if (trimmed.length < 6) {
+    //     errorText = "Password must be at least 6 characters";
+    //   }
+    // }
+
+    setEnteredValues((prevValue) => ({
+      ...prevValue,
+      [identifier]: inputValue,
+    }));
+
+    console.log(" handleINputBlur", enteredValues);
+  }
+
+  // function emailValidation(email) {
+  //   const validateEmail = email != "" && !email.includes("@");
+  //   setEnteredValues(() => ({
+  //     email: {
+  //       valu,
+  //     },
+  //   }));
+  // }
+
+  // function handleInputBlur(identifier) {
+  //   const enteredValue = enteredValues[identifier].value !== "";
+  //   setEnteredValues((preValue) => ({
+  //     ...preValue,
+  //     [identifier]: {
+  //       value: enteredValues[identifier].value,
+  //       didEdit: enteredValue ? true : false,
+  //     },
+  //   }));
+  //   console.log("Entered value", enteredValue);
+  // }
+
+  // function handleInputChange(identifier, value) {
+  //   setEnteredValues((prevValue) => ({
+  //     ...prevValue,
+  //     [identifier]: {
+  //       value: value,
+  //     },
+  //   }));
+  //   console.log(enteredValues);
+  // }
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(eneteredValues);
+    console.log(enteredValues);
   }
 
   function clearForm() {
     setEnteredValues({
-      email: { value: "", valid: "" },
-      password: { value: "", valid: "" },
+      email: {
+        value: "",
+        validation: { didEdit: false, errorText: "" },
+      },
+      password: {
+        value: "",
+        validation: { didEdit: false, errorText: "" },
+      },
     });
   }
 
@@ -47,15 +101,19 @@ export default function Login() {
           <label htmlFor="email">Email</label>
           <input
             id="email"
-            type="email"
+            type="text"
             name="email"
             onChange={(event) => handleInputChange("email", event.target.value)}
-            onBlur={() => emailValidation(eneteredValues.email)}
-            value={eneteredValues.email.value}
+            onBlur={(event) => handleInputBlur("email", event.target.value)}
+            // value={enteredValues.email.value}
+            value={enteredValues.email.value}
           />
-          {/* <div className="control-error">
-            {validateEmail && <p>Please enter valid email address</p>}
-          </div> */}
+          {/*enteredValues.email.validation.didEdit &&
+            enteredValues.email.validation.errorText && (
+              <div className="control-error">
+                <p>{enteredValues.email.validation.errorText}</p>
+              </div>
+            ) */}
         </div>
 
         <div className="control no-margin">
@@ -67,8 +125,15 @@ export default function Login() {
             onChange={(event) =>
               handleInputChange("password", event.target.value)
             }
-            value={eneteredValues.password.value}
+            onBlur={(event) => handleInputBlur("password", event.target.value)}
+            value={enteredValues.password.value}
           />
+          {/*enteredValues.password.validation.didEdit &&
+            enteredValues.password.validation.errorText && (
+              <div className="control-error">
+                <p>{enteredValues.password.validation.errorText}</p>
+              </div>
+            )*/}
         </div>
       </div>
 
