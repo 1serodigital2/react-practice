@@ -5,14 +5,55 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [invalidInput, setInvalidInput] = useState(false);
+  const [errorText, setErrorText] = useState({
+    email: "",
+    password: "",
+  });
 
   function handleInputChange(identifier, value) {
+    const validInput = validateInput(identifier, value);
+
+    console.log("validate input", inputValue);
+
+    let error;
+
+    error = !validInput && identifier === "email" ? "Invalid email" : undefined;
+    error =
+      !validInput && identifier === "password"
+        ? "Length must be greater than 6"
+        : undefined;
+
+    if (!validInput) {
+      setErrorText((prevValue) => ({
+        ...prevValue,
+        [identifier]: error,
+      }));
+    }
+
     setEnteredValues((prevValue) => ({
       ...prevValue,
       [identifier]: value,
     }));
+
+    console.log("error text", errorText);
   }
+
+  function validateInput(identifier, inputValue) {
+    if (inputValue == "") return false;
+
+    if (identifier === "email" && !inputValue.includes("@")) return true;
+    if (identifier === "password" && inputValue.length < 6) return true;
+
+    return false;
+  }
+
   function handleInputBlur(identifier, inputValue) {
+    setEnteredValues((prevValue) => ({
+      ...prevValue,
+      [identifier]: inputValue,
+    }));
+
     // const value = inputValue ?? "";
     // const valueNotEmpty = inputValue != "";
     // const trimmed = value.trim();
@@ -80,16 +121,8 @@ export default function Login() {
   }
 
   function clearForm() {
-    setEnteredValues({
-      email: {
-        value: "",
-        validation: { didEdit: false, errorText: "" },
-      },
-      password: {
-        value: "",
-        validation: { didEdit: false, errorText: "" },
-      },
-    });
+    setEnteredValues({ email: "", password: "" });
+    console.log("clear form", enteredValues);
   }
 
   return (
@@ -106,7 +139,7 @@ export default function Login() {
             onChange={(event) => handleInputChange("email", event.target.value)}
             onBlur={(event) => handleInputBlur("email", event.target.value)}
             // value={enteredValues.email.value}
-            value={enteredValues.email.value}
+            value={enteredValues.email}
           />
           {/*enteredValues.email.validation.didEdit &&
             enteredValues.email.validation.errorText && (
