@@ -5,29 +5,35 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const [invalidInput, setInvalidInput] = useState(false);
   const [errorText, setErrorText] = useState({
     email: "",
     password: "",
   });
 
+  const [formOk, setFormOk] = useState(null);
+
   function handleInputChange(identifier, value) {
     const validInput = validateInput(identifier, value);
 
-    console.log("validate input", inputValue);
+    console.log("validate input", validInput);
 
     let error;
 
-    error = !validInput && identifier === "email" ? "Invalid email" : undefined;
-    error =
-      !validInput && identifier === "password"
-        ? "Length must be greater than 6"
-        : undefined;
-
     if (!validInput) {
+      error =
+        identifier === "email" && value.length > 4
+          ? "Invalid email"
+          : identifier === "password"
+          ? "Length must be greater than 6"
+          : "";
       setErrorText((prevValue) => ({
         ...prevValue,
         [identifier]: error,
+      }));
+    } else {
+      setErrorText((prevValue) => ({
+        ...prevValue,
+        [identifier]: "",
       }));
     }
 
@@ -42,8 +48,8 @@ export default function Login() {
   function validateInput(identifier, inputValue) {
     if (inputValue == "") return false;
 
-    if (identifier === "email" && !inputValue.includes("@")) return true;
-    if (identifier === "password" && inputValue.length < 6) return true;
+    if (identifier === "email" && inputValue.includes("@")) return true;
+    if (identifier === "password" && inputValue.length > 6) return true;
 
     return false;
   }
@@ -54,28 +60,6 @@ export default function Login() {
       [identifier]: inputValue,
     }));
 
-    // const value = inputValue ?? "";
-    // const valueNotEmpty = inputValue != "";
-    // const trimmed = value.trim();
-
-    // let errorText = "";
-
-    // if (identifier === "email" && valueNotEmpty) {
-    //   if (trimmed === "") {
-    //     errorText = "Email is required";
-    //   } else if (!trimmed.includes("@")) {
-    //     errorText = "Invalid email";
-    //   }
-    // }
-
-    // if (identifier === "password" && valueNotEmpty) {
-    //   if (trimmed === "") {
-    //     errorText = "Password is required";
-    //   } else if (trimmed.length < 6) {
-    //     errorText = "Password must be at least 6 characters";
-    //   }
-    // }
-
     setEnteredValues((prevValue) => ({
       ...prevValue,
       [identifier]: inputValue,
@@ -84,40 +68,13 @@ export default function Login() {
     console.log(" handleINputBlur", enteredValues);
   }
 
-  // function emailValidation(email) {
-  //   const validateEmail = email != "" && !email.includes("@");
-  //   setEnteredValues(() => ({
-  //     email: {
-  //       valu,
-  //     },
-  //   }));
-  // }
-
-  // function handleInputBlur(identifier) {
-  //   const enteredValue = enteredValues[identifier].value !== "";
-  //   setEnteredValues((preValue) => ({
-  //     ...preValue,
-  //     [identifier]: {
-  //       value: enteredValues[identifier].value,
-  //       didEdit: enteredValue ? true : false,
-  //     },
-  //   }));
-  //   console.log("Entered value", enteredValue);
-  // }
-
-  // function handleInputChange(identifier, value) {
-  //   setEnteredValues((prevValue) => ({
-  //     ...prevValue,
-  //     [identifier]: {
-  //       value: value,
-  //     },
-  //   }));
-  //   console.log(enteredValues);
-  // }
-
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(enteredValues);
+    if (errorText.email || errorText.password) {
+      setFormOk(true);
+    } else {
+      setFormOk(false);
+    }
   }
 
   function clearForm() {
@@ -138,15 +95,13 @@ export default function Login() {
             name="email"
             onChange={(event) => handleInputChange("email", event.target.value)}
             onBlur={(event) => handleInputBlur("email", event.target.value)}
-            // value={enteredValues.email.value}
             value={enteredValues.email}
           />
-          {/*enteredValues.email.validation.didEdit &&
-            enteredValues.email.validation.errorText && (
-              <div className="control-error">
-                <p>{enteredValues.email.validation.errorText}</p>
-              </div>
-            ) */}
+          {errorText.email && (
+            <div className="control-error">
+              <p>{errorText.email}</p>
+            </div>
+          )}
         </div>
 
         <div className="control no-margin">
@@ -159,14 +114,13 @@ export default function Login() {
               handleInputChange("password", event.target.value)
             }
             onBlur={(event) => handleInputBlur("password", event.target.value)}
-            value={enteredValues.password.value}
+            value={enteredValues.password}
           />
-          {/*enteredValues.password.validation.didEdit &&
-            enteredValues.password.validation.errorText && (
-              <div className="control-error">
-                <p>{enteredValues.password.validation.errorText}</p>
-              </div>
-            )*/}
+          {errorText.password && (
+            <div className="control-error">
+              <p>{errorText.password}</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -180,6 +134,11 @@ export default function Login() {
         </button>
         <button className="button">Login</button>
       </p>
+      {formOk == false && (
+        <div className="control-error">
+          <p>Please fix invalid input</p>
+        </div>
+      )}
     </form>
   );
 }
