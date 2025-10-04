@@ -1,13 +1,50 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function Login() {
   const email = useRef();
   const password = useRef();
 
+  const [errorText, setErrorText] = useState({
+    email: "",
+    password: "",
+  });
+
   function handleSubmit(event) {
     event.preventDefault();
+    const enteredEmail = email.current.value;
+    const enteredPassword = password.current.value;
+
+    const emailIsInvalid =
+      !enteredEmail || !enteredEmail.includes("@") ? true : false;
+    const passwordIsInvalid =
+      !enteredPassword || enteredPassword.length < 6 ? true : false;
+
+    if (emailIsInvalid) {
+      setErrorText((prevValue) => ({
+        ...prevValue,
+        email: "Invalid email",
+      }));
+    } else {
+      setErrorText((prevValue) => ({
+        ...prevValue,
+        email: "",
+      }));
+    }
+    if (passwordIsInvalid) {
+      setErrorText((prevValue) => ({
+        ...prevValue,
+        password: "Invalid password",
+      }));
+    } else {
+      setErrorText((prevValue) => ({
+        ...prevValue,
+        password: "",
+      }));
+    }
+
     console.log(email.current.value);
     console.log(password.current.value);
+    console.log("errorText", errorText);
   }
 
   function clearForm() {
@@ -21,12 +58,22 @@ export default function Login() {
       <div className="control-row">
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
-          <input id="email" type="email" name="email" ref={email} />
+          <input id="email" type="text" name="email" ref={email} />
+          {errorText.email && (
+            <div className="control-error">
+              <p>{errorText.email}</p>
+            </div>
+          )}
         </div>
 
         <div className="control no-margin">
           <label htmlFor="password">Password</label>
           <input id="password" type="password" name="password" ref={password} />
+          {errorText.password && (
+            <div className="control-error">
+              <p>{errorText.password}</p>
+            </div>
+          )}
         </div>
       </div>
 

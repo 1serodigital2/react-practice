@@ -23,7 +23,7 @@ export default function Login() {
       error =
         identifier === "email" && value.length > 4
           ? "Invalid email"
-          : identifier === "password"
+          : identifier === "password" && value.length > 4
           ? "Length must be greater than 6"
           : "";
       setErrorText((prevValue) => ({
@@ -70,11 +70,12 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (errorText.email || errorText.password) {
+    if (errorText.email == "" && errorText.password == "") {
       setFormOk(true);
     } else {
       setFormOk(false);
     }
+    console.log("FOrm", formOk);
   }
 
   function clearForm() {
