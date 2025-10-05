@@ -41,14 +41,11 @@ export default function Login() {
         password: "",
       }));
     }
-
-    console.log(email.current.value);
-    console.log(password.current.value);
-    console.log("errorText", errorText);
   }
 
   function clearForm() {
-    setEnteredValues({ email: "", password: "" });
+    email.current.value = "";
+    password.current.value = "";
   }
 
   return (
