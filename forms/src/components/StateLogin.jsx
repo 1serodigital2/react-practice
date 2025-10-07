@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Input from "./Input";
 
 export default function Login() {
   const [enteredValues, setEnteredValues] = useState({
@@ -89,39 +90,27 @@ export default function Login() {
 
       <div className="control-row">
         <div className="control no-margin">
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="text"
-            name="email"
+          <Input
+            inputLabel="Email"
+            inputType="email"
             onChange={(event) => handleInputChange("email", event.target.value)}
             onBlur={(event) => handleInputBlur("email", event.target.value)}
-            value={enteredValues.email}
+            inputValue={enteredValues.email}
+            error={errorText.email}
           />
-          {errorText.email && (
-            <div className="control-error">
-              <p>{errorText.email}</p>
-            </div>
-          )}
         </div>
 
         <div className="control no-margin">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
+          <Input
+            inputLabel="Password"
+            inputType="password"
             onChange={(event) =>
               handleInputChange("password", event.target.value)
             }
             onBlur={(event) => handleInputBlur("password", event.target.value)}
-            value={enteredValues.password}
+            inputValue={enteredValues.password}
+            error={errorText.password}
           />
-          {errorText.password && (
-            <div className="control-error">
-              <p>{errorText.password}</p>
-            </div>
-          )}
         </div>
       </div>
 
