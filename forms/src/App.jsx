@@ -8,7 +8,7 @@ function App() {
     <>
       <Header />
       <main>
-        <Singup />
+        <Login />
       </main>
     </>
   );
