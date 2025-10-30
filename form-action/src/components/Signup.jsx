@@ -23,7 +23,7 @@ export default function Signup() {
       errors.push("Invalid email");
     }
 
-    if (isNotEmpty(password) || !hasMinLength(password, 4)) {
+    if (!isNotEmpty(password) || !hasMinLength(password, 4)) {
       errors.push("Password must be atleast 5 characters");
     }
 
@@ -144,6 +144,7 @@ export default function Signup() {
           name="role"
           defaultValue={formState.enteredValues?.role}
         >
+          <option value="">Select your role</option>
           <option value="student">Student</option>
           <option value="teacher">Teacher</option>
           <option value="employee">Employee</option>
@@ -160,7 +161,9 @@ export default function Signup() {
             id="google"
             name="acquisition"
             value="google"
-            defaultValue={formState.enteredValues?.acquisitionChannel}
+            defaultChecked={formState.enteredValues?.acquisitionChannel.includes(
+              "google"
+            )}
           />
           <label htmlFor="google">Google</label>
         </div>
@@ -171,7 +174,9 @@ export default function Signup() {
             id="friend"
             name="acquisition"
             value="friend"
-            defaultValue={formState.enteredValues?.acquisitionChannel}
+            defaultChecked={formState.enteredValues?.acquisitionChannel.includes(
+              "friend"
+            )}
           />
           <label htmlFor="friend">Referred by friend</label>
         </div>
@@ -182,7 +187,9 @@ export default function Signup() {
             id="other"
             name="acquisition"
             value="other"
-            defaultValue={formState.enteredValues?.role}
+            defaultChecked={formState.enteredValues?.acquisitionChannel.includes(
+              "other"
+            )}
           />
           <label htmlFor="other">Other</label>
         </div>
@@ -194,7 +201,7 @@ export default function Signup() {
             type="checkbox"
             id="terms-and-conditions"
             name="terms"
-            defaultValue={formState.enteredValues?.terms}
+            defaultChecked={formState.enteredValues?.terms}
           />
           I agree to the terms and conditions
         </label>
