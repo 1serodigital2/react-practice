@@ -1,5 +1,6 @@
 import { useActionState, use } from "react";
 import { OpinionsContext } from "../store/opinions-context";
+import Submit from "./Submit";
 
 export function NewOpinion() {
   const { addOpinion } = use(OpinionsContext);
@@ -77,10 +78,8 @@ export function NewOpinion() {
             defaultValue={formState.enteredValues?.body}
           ></textarea>
         </p>
+        <Submit />
 
-        <p className="actions">
-          <button type="submit">Submit</button>
-        </p>
         {formState.errors && (
           <ul>
             {formState.errors.map((value) => (

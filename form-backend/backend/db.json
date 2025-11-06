@@ -1,6 +1,27 @@
 {
   "opinions": [
     {
+      "id": 1762401847376,
+      "votes": 4,
+      "userName": "adsf wf awdrt ",
+      "title": "awer wadf ",
+      "body": "waerf wsadf sd f"
+    },
+    {
+      "id": 1762401420719,
+      "votes": -3,
+      "userName": "ssdgsdf dsfg df",
+      "title": "g dsffg sdfg sdfg",
+      "body": "sdf sdfg sdfg dsfg"
+    },
+    {
+      "id": 1762401198149,
+      "votes": 0,
+      "userName": "Rakesh Mahato",
+      "title": "Journey to the end",
+      "body": "This tale is of a brave young man from Amazon forest"
+    },
+    {
       "id": 1762317323954,
       "votes": 0,
       "userName": "sdgdfhdf sdfg dfg",
@@ -9,7 +30,7 @@
     },
     {
       "id": 1762317263993,
-      "votes": 0,
+      "votes": 1,
       "userName": "sdfsgfsgfdg",
       "title": "dfgdfgdfdghgf",
       "body": "hfghfgfg sdffsgfdsfgdfgdfg"
@@ -26,7 +47,7 @@
       "userName": "Maximilian Schwarzmüller",
       "title": "Do yourself a favor and learn React!",
       "body": "React is an amazing JavaScript library!\n\nDespite all it's shortcomings.",
-      "votes": 0
+      "votes": 1
     },
     {
       "id": 2,
