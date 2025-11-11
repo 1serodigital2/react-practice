@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Modal from "./Modal";
 
-const Header = ({ cartItems = {} }) => {
+const Header = ({ cartItems = {}, handleCartItems }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCartModal = (value) => {
@@ -21,7 +21,11 @@ const Header = ({ cartItems = {} }) => {
         </button>
       </div>
       {isModalOpen && (
-        <Modal handleModal={handleCartModal} cartItems={cartItems} />
+        <Modal
+          handleModal={handleCartModal}
+          cartItems={cartItems}
+          handleCartItems={handleCartItems}
+        />
       )}
     </>
   );
