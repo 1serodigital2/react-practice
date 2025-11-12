@@ -1,10 +1,14 @@
-import { useEffect } from "react";
+import { useState } from "react";
+
+import CartModalContent from "./CartModalContent";
 
 const Modal = ({ handleModal, cartItems, handleCartItems }) => {
-  const handleQtyChange = (method, productId) => {
-    console.log("method", method);
-    console.log("productId", productId);
+  const totalPrice = Object.values(cartItems).reduce(
+    (acc, { price, qty }) => acc + price * qty,
+    0
+  );
 
+  const handleQtyChange = (method, productId) => {
     handleCartItems((prev) => {
       console.log(prev);
       let product = prev[productId];
@@ -26,46 +30,14 @@ const Modal = ({ handleModal, cartItems, handleCartItems }) => {
     });
   };
 
-  // useEffect(() => {
-  //   console.log("cartItems", cartItems);
-  // }, [cartItems]);
-
   return (
     <div className="modal">
-      <div className="cart">
-        <h2>Your Cart</h2>
-        <ul>
-          {Object.keys(cartItems).length > 0 &&
-            Object.values(cartItems).map(({ name, price, productId, qty }) => (
-              <li className="cart-item modal-actions" key={productId}>
-                <span className="text-button">
-                  {name}. - 1 x ${price}
-                </span>
-                <span className="cart-item-actions">
-                  <button
-                    className="cart-item-action"
-                    onClick={() => handleQtyChange("remove", productId)}
-                  >
-                    -
-                  </button>
-                  <input type="text" value={qty} readOnly />
-                  <button
-                    className="cart-item-action"
-                    onClick={() => handleQtyChange("add", productId)}
-                  >
-                    +
-                  </button>
-                </span>
-              </li>
-            ))}
-        </ul>
-      </div>
-      <div className="modal-actions">
-        <button className="text-button" onClick={() => handleModal(false)}>
-          Close
-        </button>
-        <button className="button">Go to checkout</button>
-      </div>
+      <CartModalContent
+        cartItems={cartItems}
+        totalPrice={totalPrice}
+        handleQtyChange={handleQtyChange}
+        handleModal={handleModal}
+      />
     </div>
   );
 };

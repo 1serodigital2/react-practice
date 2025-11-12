@@ -109,7 +109,7 @@ h1 {
 
 .cart h2 {
   margin: 1rem 0;
-  color: black
+  color: black;
 }
 
 .cart ul {
@@ -244,11 +244,21 @@ h1 {
   width: 80%;
   max-width: 40rem;
   animation: fade-slide-up 0.3s ease-out forwards;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) !important;
 }
 
 .modal::backdrop {
   background-color: rgba(0, 0, 0, 0.55);
 }
+/* .modal::before {
+  position: inherit;
+  content: "";
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+} */
 
 .center {
   text-align: center;
@@ -270,6 +280,10 @@ h1 {
 
 .error p {
   margin: 0;
+}
+.meal-total-price {
+  text-align: end;
+  color: #1f1a09;
 }
 
 @keyframes fade-slide-up {
