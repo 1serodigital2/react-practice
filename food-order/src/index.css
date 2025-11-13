@@ -285,7 +285,11 @@ h1 {
   text-align: end;
   color: #1f1a09;
 }
-
+.form h2,
+.form label,
+.form p {
+  color: black;
+}
 @keyframes fade-slide-up {
   from {
     opacity: 0;

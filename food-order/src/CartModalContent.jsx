@@ -3,6 +3,7 @@ const CartModalContent = ({
   totalPrice,
   handleQtyChange,
   handleModal,
+  handleGoToCheckout,
 }) => {
   return (
     <>
@@ -39,7 +40,9 @@ const CartModalContent = ({
         <button className="text-button" onClick={() => handleModal(false)}>
           Close
         </button>
-        <button className="button">Go to checkout</button>
+        <button className="button" onClick={() => handleGoToCheckout(true)}>
+          Go to checkout
+        </button>
       </div>
     </>
   );

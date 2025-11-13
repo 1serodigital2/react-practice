@@ -1,8 +1,15 @@
 import { useState } from "react";
 
 import CartModalContent from "./CartModalContent";
+import CheckoutForm from "./CheckoutForm";
 
 const Modal = ({ handleModal, cartItems, handleCartItems }) => {
+  const [isCheckoutFormActive, setIsCheckoutFormActive] = useState(false);
+
+  const handleGoToCheckout = (value = false) => {
+    setIsCheckoutFormActive(value);
+  };
+
   const totalPrice = Object.values(cartItems).reduce(
     (acc, { price, qty }) => acc + price * qty,
     0
@@ -32,12 +39,28 @@ const Modal = ({ handleModal, cartItems, handleCartItems }) => {
 
   return (
     <div className="modal">
-      <CartModalContent
+      {!isCheckoutFormActive ? (
+        <CartModalContent
+          cartItems={cartItems}
+          totalPrice={totalPrice}
+          handleQtyChange={handleQtyChange}
+          handleModal={handleModal}
+          handleGoToCheckout={handleGoToCheckout}
+        />
+      ) : (
+        <CheckoutForm
+          handleGoToCheckout={handleGoToCheckout}
+          cartItems={cartItems}
+          totalPrice={totalPrice}
+        />
+      )}
+      {/* <CartModalContent
         cartItems={cartItems}
         totalPrice={totalPrice}
         handleQtyChange={handleQtyChange}
         handleModal={handleModal}
-      />
+        handleGoToCheckout={handleGoToCheckout}
+      /> */}
     </div>
   );
 };
