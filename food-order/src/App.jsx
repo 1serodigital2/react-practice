@@ -12,9 +12,9 @@ function App() {
       [productId]: { name, price, productId, qty },
     }));
 
-    console.log("adding to cart ", productId);
+    // console.log("adding to cart ", productId);
     console.log("cart products ", cartProducts);
-    console.log("cart num", Object.keys(cartProducts).length);
+    // console.log("cart num", Object.keys(cartProducts).length);
   };
   return (
     <>
