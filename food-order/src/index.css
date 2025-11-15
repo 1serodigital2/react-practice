@@ -290,6 +290,12 @@ h1 {
 .form p {
   color: black;
 }
+
+.modal-title {
+  color: black;
+  text-align: center;
+}
+
 @keyframes fade-slide-up {
   from {
     opacity: 0;

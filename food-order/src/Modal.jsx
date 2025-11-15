@@ -5,6 +5,7 @@ import CheckoutForm from "./CheckoutForm";
 
 const Modal = ({ handleModal, cartItems, handleCartItems }) => {
   const [isCheckoutFormActive, setIsCheckoutFormActive] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
 
   const handleGoToCheckout = (value = false) => {
     setIsCheckoutFormActive(value);
@@ -39,7 +40,14 @@ const Modal = ({ handleModal, cartItems, handleCartItems }) => {
 
   return (
     <div className="modal">
-      {!isCheckoutFormActive ? (
+      {Object.values(cartItems).length === 0 && !orderPlaced ? (
+        <>
+          <h3 className="modal-title">Please add some items to cart</h3>
+          <button className="button" onClick={() => handleModal(false)}>
+            Close
+          </button>
+        </>
+      ) : !isCheckoutFormActive ? (
         <CartModalContent
           cartItems={cartItems}
           totalPrice={totalPrice}
@@ -52,8 +60,14 @@ const Modal = ({ handleModal, cartItems, handleCartItems }) => {
           handleGoToCheckout={handleGoToCheckout}
           cartItems={cartItems}
           totalPrice={totalPrice}
+          handleModal={handleModal}
+          handleCartItems={handleCartItems}
+          setOrderPlaced={setOrderPlaced}
+          orderPlaced={orderPlaced}
         />
       )}
+
+      {/* {} */}
       {/* <CartModalContent
         cartItems={cartItems}
         totalPrice={totalPrice}

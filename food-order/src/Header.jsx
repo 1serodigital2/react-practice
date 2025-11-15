@@ -16,7 +16,7 @@ const Header = ({ cartItems = {}, handleCartItems }) => {
           <img src="/logo.jpg" alt="" />
           <h1>REACTFOOD</h1>
         </div>
-        <button onClick={handleCartModal}>
+        <button className="text-button" onClick={handleCartModal}>
           Cart {!cartItems && 3} {cartItems && Object.keys(cartItems).length}
         </button>
       </div>

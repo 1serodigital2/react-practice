@@ -1,10 +1,23 @@
 import { useActionState } from "react";
 import { fieldEmpty, hasLessCharacters, invalidEmail } from "./utils";
 
-const CheckoutForm = ({ handleGoToCheckout, cartItems, totalPrice }) => {
+const CheckoutForm = ({
+  handleGoToCheckout,
+  cartItems,
+  totalPrice,
+  handleModal,
+  handleCartItems,
+  setOrderPlaced,
+  orderPlaced,
+}) => {
+  const handleGoToCart = () => {
+    handleGoToCheckout(false);
+    setOrderPlaced(false);
+  };
+
   const handleFormSubmission = async (prevFormState, formData) => {
     try {
-      const fullName = formData.get("fullName");
+      const name = formData.get("fullName");
       const email = formData.get("email");
       const street = formData.get("street");
       const postalCode = formData.get("postalCode");
@@ -12,7 +25,7 @@ const CheckoutForm = ({ handleGoToCheckout, cartItems, totalPrice }) => {
 
       let errors = [];
 
-      if (fieldEmpty(fullName)) errors.push("Full name cannot be empty");
+      if (fieldEmpty(name)) errors.push("Full name cannot be empty");
 
       if (hasLessCharacters(email, 4) || invalidEmail(email))
         errors.push("Invalid email");
@@ -24,10 +37,10 @@ const CheckoutForm = ({ handleGoToCheckout, cartItems, totalPrice }) => {
       if (fieldEmpty(city)) errors.push("City is empty");
 
       const enteredValues = {
-        fullName,
+        name,
         email,
         street,
-        postalCode,
+        "postal-code": postalCode,
         city,
       };
 
@@ -47,6 +60,8 @@ const CheckoutForm = ({ handleGoToCheckout, cartItems, totalPrice }) => {
         },
       };
 
+      console.log("orderData", orderData);
+
       const response = await fetch("http://localhost:3000/orders", {
         method: "POST",
         headers: {
@@ -61,6 +76,11 @@ const CheckoutForm = ({ handleGoToCheckout, cartItems, totalPrice }) => {
       }
 
       const saveResponse = await response.json();
+
+      if (saveResponse.status === "success") {
+        setOrderPlaced(true);
+        handleCartItems({});
+      }
 
       console.log("saveResponse", saveResponse);
 
@@ -77,73 +97,87 @@ const CheckoutForm = ({ handleGoToCheckout, cartItems, totalPrice }) => {
 
   return (
     <div className="form">
-      <h2>Checkout</h2>
-      <p>Total Price: $ {totalPrice}</p>
-      <form action={formAction}>
-        <div className="control">
-          <label htmlFor="name">Full Name</label>
-          <input
-            type="text"
-            name="fullName"
-            defaultValue={formState.orderData?.fullName}
-          />
-        </div>
-        <div className="control">
-          <label htmlFor="email">Email Address</label>
-          <input
-            type="text"
-            name="email"
-            defaultValue={formState.orderData?.email}
-          />
-        </div>
-        <div className="control">
-          <label htmlFor="">Street</label>
-          <input
-            type="text"
-            name="street"
-            defaultValue={formState.orderData?.street}
-          />
-        </div>
-        <div className="control-row">
-          <div className="control">
-            <label htmlFor="">Postal Code</label>
-            <input
-              type="text"
-              name="postalCode"
-              defaultValue={formState.orderData?.postalCode}
-            />
-          </div>
-          <div className="control">
-            <label htmlFor="">City</label>
-            <input
-              type="text"
-              name="city"
-              defaultValue={formState.orderData?.city}
-            />
-          </div>
-        </div>
-        <div className="modal-actions">
-          <button
-            className="text-button"
-            onClick={() => handleGoToCheckout(false)}
-          >
-            Back
-          </button>
-          <button className="text-button" onClick={() => handleModal(false)}>
+      {orderPlaced ? (
+        <>
+          <h2 className="modal-title">Order placed successfully</h2>
+          <button className="button" onClick={() => handleModal(false)}>
             Close
           </button>
-          <button className="button">Submit</button>
-        </div>
+        </>
+      ) : (
+        <>
+          <h2>Checkout</h2>
+          <p>Total Price: $ {totalPrice}</p>
+          <form action={formAction}>
+            <div className="control">
+              <label htmlFor="name">Full Name</label>
+              <input
+                type="text"
+                name="fullName"
+                defaultValue={formState.orderData?.name}
+              />
+            </div>
+            <div className="control">
+              <label htmlFor="email">Email Address</label>
+              <input
+                type="text"
+                name="email"
+                defaultValue={formState.orderData?.email}
+              />
+            </div>
+            <div className="control">
+              <label htmlFor="">Street</label>
+              <input
+                type="text"
+                name="street"
+                defaultValue={formState.orderData?.street}
+              />
+            </div>
+            <div className="control-row">
+              <div className="control">
+                <label htmlFor="">Postal Code</label>
+                <input
+                  type="text"
+                  name="postalCode"
+                  defaultValue={formState.orderData?.["postal-code"]}
+                />
+              </div>
+              <div className="control">
+                <label htmlFor="">City</label>
+                <input
+                  type="text"
+                  name="city"
+                  defaultValue={formState.orderData?.city}
+                />
+              </div>
+            </div>
+            <div className="modal-actions">
+              <button
+                className="text-button"
+                onClick={() => handleGoToCart(false)}
+              >
+                Back
+              </button>
+              <button
+                className="text-button"
+                onClick={() => handleModal(false)}
+              >
+                Close
+              </button>
+              <button className="button">Submit</button>
+            </div>
 
-        {formState?.errors?.length > 0 && (
-          <div className="error">
-            {formState.errors.map((error) => (
-              <p key={error}>{error}</p>
-            ))}
-            <p></p>
-          </div>
-        )}
-      </form>
+            {formState?.errors?.length > 0 && (
+              <div className="error">
+                {formState.errors.map((error) => (
+                  <p key={error}>{error}</p>
+                ))}
+                <p></p>
+              </div>
+            )}
+          </form>
+        </>
+      )}
     </div>
   );
 };
