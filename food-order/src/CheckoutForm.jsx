@@ -92,6 +92,7 @@ const CheckoutForm = ({
 
   const [formState, formAction] = useActionState(handleFormSubmission, {
     errors: null,
+    orderData: {},
   });
   console.log("formState", formState);
 
@@ -114,7 +115,7 @@ const CheckoutForm = ({
               <input
                 type="text"
                 name="fullName"
-                defaultValue={formState.orderData?.name}
+                defaultValue={formState?.orderData?.name}
               />
             </div>
             <div className="control">
@@ -122,7 +123,7 @@ const CheckoutForm = ({
               <input
                 type="text"
                 name="email"
-                defaultValue={formState.orderData?.email}
+                defaultValue={formState?.orderData?.email}
               />
             </div>
             <div className="control">
@@ -130,7 +131,7 @@ const CheckoutForm = ({
               <input
                 type="text"
                 name="street"
-                defaultValue={formState.orderData?.street}
+                defaultValue={formState?.orderData?.street}
               />
             </div>
             <div className="control-row">
@@ -139,7 +140,7 @@ const CheckoutForm = ({
                 <input
                   type="text"
                   name="postalCode"
-                  defaultValue={formState.orderData?.["postal-code"]}
+                  defaultValue={formState?.orderData?.["postal-code"]}
                 />
               </div>
               <div className="control">
@@ -147,7 +148,7 @@ const CheckoutForm = ({
                 <input
                   type="text"
                   name="city"
-                  defaultValue={formState.orderData?.city}
+                  defaultValue={formState?.orderData?.city}
                 />
               </div>
             </div>
