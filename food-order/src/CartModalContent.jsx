@@ -1,10 +1,15 @@
+import useCart from "./hooks/useCart";
+
 const CartModalContent = ({
-  cartItems,
+  // cartItems,
   totalPrice,
   handleQtyChange,
   handleModal,
   handleGoToCheckout,
 }) => {
+  const { cartProducts: cartItems, handleCartQtyChange } = useCart();
+
+  console.log("cart_items", cartItems);
   return (
     <>
       <div className="cart">
@@ -12,21 +17,27 @@ const CartModalContent = ({
         <ul>
           {Object.keys(cartItems).length > 0 &&
             Object.values(cartItems).map(({ name, price, productId, qty }) => (
-              <li className="cart-item modal-actions" key={productId}>
+              <li
+                className="cart-item modal-actions"
+                key={productId}
+                data-testid={productId}
+              >
                 <span className="text-button">
                   {name}. - 1 x ${price}
                 </span>
                 <span className="cart-item-actions">
                   <button
                     className="cart-item-action"
-                    onClick={() => handleQtyChange("remove", productId)}
+                    // onClick={() => handleQtyChange("remove", productId)}
+                    onClick={() => handleCartQtyChange("remove", productId)}
                   >
                     -
                   </button>
                   <input type="text" value={qty} readOnly />
                   <button
                     className="cart-item-action"
-                    onClick={() => handleQtyChange("add", productId)}
+                    // onClick={() => handleQtyChange("add", productId)}
+                    onClick={() => handleCartQtyChange("add", productId)}
                   >
                     +
                   </button>

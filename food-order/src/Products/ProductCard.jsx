@@ -1,4 +1,9 @@
-const ProductCard = ({ id, name, price, description, image, addToCart }) => {
+import { useContext } from "react";
+import useCart from "../hooks/useCart";
+
+const ProductCard = ({ id, name, price, description, image }) => {
+  const { handleAddToCart } = useCart();
+
   const productImg = "http://localhost:3000/" + image;
   return (
     <div className="meal-item">
@@ -8,7 +13,7 @@ const ProductCard = ({ id, name, price, description, image, addToCart }) => {
       <p className="meal-item-description">{description}</p>
       <button
         className="button meal-item-actions"
-        onClick={() => addToCart(name, price, id)}
+        onClick={() => handleAddToCart(name, price, id)}
       >
         Add to Cart
       </button>

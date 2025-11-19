@@ -1,8 +1,11 @@
 import { useState } from "react";
+import useCart from "./hooks/useCart";
 
 import Modal from "./Modal";
 
-const Header = ({ cartItems = {}, handleCartItems }) => {
+const Header = ({ handleCartItems }) => {
+  const { cartProducts: cartItems } = useCart();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCartModal = (value) => {
@@ -24,7 +27,7 @@ const Header = ({ cartItems = {}, handleCartItems }) => {
         <Modal
           handleModal={handleCartModal}
           cartItems={cartItems}
-          handleCartItems={handleCartItems}
+          // handleCartItems={handleCartItems}
         />
       )}
     </>

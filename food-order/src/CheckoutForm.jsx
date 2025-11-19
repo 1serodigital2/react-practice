@@ -1,15 +1,19 @@
 import { useActionState } from "react";
 import { fieldEmpty, hasLessCharacters, invalidEmail } from "./utils";
 
+import useCart from "./hooks/useCart";
+
 const CheckoutForm = ({
   handleGoToCheckout,
-  cartItems,
+  // cartItems,
   totalPrice,
   handleModal,
-  handleCartItems,
+  // handleCartItems,
   setOrderPlaced,
   orderPlaced,
 }) => {
+  const { cartProducts: cartItems, emptyCart } = useCart();
+
   const handleGoToCart = () => {
     handleGoToCheckout(false);
     setOrderPlaced(false);
@@ -79,7 +83,7 @@ const CheckoutForm = ({
 
       if (saveResponse.status === "success") {
         setOrderPlaced(true);
-        handleCartItems({});
+        emptyCart({});
       }
 
       console.log("saveResponse", saveResponse);

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import ProductCard from "./ProductCard";
 
-const Products = ({ addToCart }) => {
+const Products = () => {
   const [meals, setMeals] = useState([]);
 
   useEffect(() => {
@@ -30,9 +30,7 @@ const Products = ({ addToCart }) => {
   return (
     <div id="meals">
       {meals.length > 0 ? (
-        meals.map((meal) => (
-          <ProductCard key={meal.id} {...meal} addToCart={addToCart} />
-        ))
+        meals.map((meal) => <ProductCard key={meal.id} {...meal} />)
       ) : (
         <p>Loading meals...</p>
       )}
