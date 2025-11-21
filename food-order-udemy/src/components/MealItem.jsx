@@ -1,4 +1,5 @@
 import { currencyFormatter } from "../utils/currencyFormatter";
+import Button from "./UI/Button";
 
 const MealItem = ({ meal }) => {
   return (
@@ -13,7 +14,8 @@ const MealItem = ({ meal }) => {
           <p className="meal-item-description">{meal.description}</p>
         </div>
         <div className="meal-item-action">
-          <button>Add to cart</button>
+          <Button>Add to cart</Button>
+          {/* <button>Add to cart</button> */}
         </div>
       </article>
     </li>
