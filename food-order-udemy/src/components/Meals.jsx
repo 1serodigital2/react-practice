@@ -13,7 +13,7 @@ const Meals = () => {
           return;
         }
         const responseData = await response.json();
-        console.log("response data", responseData);
+        // console.log("response data", responseData);
 
         setLoadedMeals(responseData);
         return responseData;
@@ -25,7 +25,7 @@ const Meals = () => {
     getMeals();
   }, []);
 
-  console.log("meals", loadedMeals);
+  // console.log("meals", loadedMeals);
 
   return (
     <ul id="meals">
