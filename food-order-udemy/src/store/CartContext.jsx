@@ -1,7 +1,7 @@
 import { createContext, useReducer } from "react";
 
 const CartContext = createContext({
-  item: [],
+  items: [],
   addItem: (item) => {},
   removeItem: (id) => {},
 });
@@ -9,7 +9,7 @@ const CartContext = createContext({
 const cartReducer = (state, action) => {
   if (action.type === "ADD_ITEM") {
     // console.log("state", state);
-    // console.log("action", action);
+    console.log("action", action);
 
     const existingCartItemIndex = state.items.findIndex(
       (item) => item.id === action.item.id
@@ -44,17 +44,23 @@ const cartReducer = (state, action) => {
     const updatedItems = [...state.items];
 
     const existingCartItem = state.items[existingCartItemIndex];
+    console.log("existing item", existingCartItem);
 
     if (existingCartItem.quantity === 1) {
+      console.log("existing item is 1");
+
       updatedItems.splice(existingCartItemIndex, 1);
     } else {
+      console.log("existing item is not 1");
       const updateCartItem = {
         ...existingCartItem,
         quantity: existingCartItem.quantity - 1,
       };
 
-      updatedItems[existingCartItem] = updateCartItem;
+      updatedItems[existingCartItemIndex] = updateCartItem;
     }
+
+    console.log("updatedItems", updatedItems);
 
     return { ...state, items: updatedItems };
   }
@@ -66,10 +72,13 @@ const CartContextProvider = ({ children }) => {
   const [cart, dispatchCartAction] = useReducer(cartReducer, { items: [] });
 
   const addItem = (item) => {
+    console.log("addItem", item);
+
     dispatchCartAction({ type: "ADD_ITEM", item });
   };
   const removeItem = (id) => {
-    dispatchCartAction({ type: "ADD_ITEM", id });
+    console.log("removeItem ", id);
+    dispatchCartAction({ type: "REMOVE_ITEM", id });
   };
 
   const cartContext = {
@@ -78,7 +87,7 @@ const CartContextProvider = ({ children }) => {
     removeItem,
   };
 
-  console.log("cartContext", cartContext);
+  // console.log("cartContext", cartContext);
 
   return (
     <CartContext.Provider value={cartContext}>{children}</CartContext.Provider>
