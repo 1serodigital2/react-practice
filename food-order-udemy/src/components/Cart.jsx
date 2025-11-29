@@ -40,7 +40,7 @@ const Cart = ({ open }) => {
         <Button textOnly onClick={() => userProgressCtx.hideCart()}>
           Close
         </Button>
-        <Button>Go to checkout</Button>
+        {cartCtxt.items.length > 0 && <Button>Go to checkout</Button>}
       </p>
     </Modal>
   );
