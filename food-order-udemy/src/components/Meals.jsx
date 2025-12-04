@@ -1,31 +1,45 @@
 import { useEffect, useState } from "react";
 import MealItem from "./MealItem";
+import useHttp from "../hooks/useHttp";
+
+const requestConfig = {};
 
 const Meals = () => {
-  const [loadedMeals, setLoadedMeals] = useState([]);
+  // const [loadedMeals, setLoadedMeals] = useState([]);
+  const {
+    data: loadedMeals,
+    isLoading,
+    error,
+  } = useHttp("http://localhost:3000/meals", requestConfig, []);
 
-  useEffect(() => {
-    const getMeals = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/meals");
-        if (!response.ok) {
-          console.log("response error", response);
-          return;
-        }
-        const responseData = await response.json();
-        // console.log("response data", responseData);
+  console.log("meals data", loadedMeals);
 
-        setLoadedMeals(responseData);
-        return responseData;
-      } catch (error) {
-        console.log("fatal error", error);
-      }
-    };
+  // useEffect(() => {
+  //   const getMeals = async () => {
+  //     try {
+  //       const response = await fetch("http://localhost:3000/meals");
+  //       if (!response.ok) {
+  //         console.log("response error", response);
+  //         return;
+  //       }
+  //       const responseData = await response.json();
+  //       // console.log("response data", responseData);
 
-    getMeals();
-  }, []);
+  //       setLoadedMeals(responseData);
+  //       return responseData;
+  //     } catch (error) {
+  //       console.log("fatal error", error);
+  //     }
+  //   };
+
+  //   getMeals();
+  // }, []);
 
   // console.log("meals", loadedMeals);
+
+  // if (isLoading) {
+  //   return <p>Product is loading...</p>;
+  // }
 
   return (
     <ul id="meals">
