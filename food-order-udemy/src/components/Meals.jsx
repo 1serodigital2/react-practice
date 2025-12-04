@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MealItem from "./MealItem";
 import useHttp from "../hooks/useHttp";
+import Error from "./Error";
 
 const requestConfig = {};
 
@@ -10,7 +11,7 @@ const Meals = () => {
     data: loadedMeals,
     isLoading,
     error,
-  } = useHttp("http://localhost:3000/meals", requestConfig, []);
+  } = useHttp("http://localhost:3000/mealseee", requestConfig, []);
 
   console.log("meals data", loadedMeals);
 
@@ -37,9 +38,13 @@ const Meals = () => {
 
   // console.log("meals", loadedMeals);
 
-  // if (isLoading) {
-  //   return <p>Product is loading...</p>;
-  // }
+  if (isLoading) {
+    return <p>Fetching products...</p>;
+  }
+
+  if (error) {
+    return <Error title="Error" message={error} />;
+  }
 
   return (
     <ul id="meals">
