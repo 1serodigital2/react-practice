@@ -5,8 +5,21 @@ import Input from "./Input";
 import Button from "./UI/Button";
 import UserProgressContext from "../store/UserProgressContext";
 import Modal from "./UI/Modal";
+import useHttp from "../hooks/useHttp";
 
 const Checkout = () => {
+  const requestConfig = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const {
+    sendRequest,
+    isLoading: isSending,
+    error,
+  } = useHttp("http://localhost:3000/orders", requestConfig);
+
   const cartCtx = useContext(CartContext);
   const totalPrice = cartCtx.items.reduce((totalItemPrice, item) => {
     return totalItemPrice + item.quantity * item.price;
@@ -24,20 +37,43 @@ const Checkout = () => {
     const fd = new FormData(event.target);
     const customerData = Object.fromEntries(fd.entries());
 
-    fetch("http://localhost:3000/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    sendRequest(
+      JSON.stringify({
         order: {
           items: cartCtx.items,
           customer: customerData,
         },
-      }),
-    });
+      })
+    );
+
+    // fetch("http://localhost:3000/orders", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     order: {
+    //       items: cartCtx.items,
+    //       customer: customerData,
+    //     },
+    //   }),
+    // });
   };
 
+  let actions = (
+    <>
+      <Button type="button" textonly onClick={handleCheckoutClose}>
+        Close
+      </Button>
+      <Button textonly disabled={isSending}>
+        Submit order
+      </Button>
+    </>
+  );
+
+  if (isSending) {
+    actions = <span>Submitting order request...</span>;
+  }
   return (
     <Modal
       open={userProgressCtx.progress === "checkout"}
@@ -53,12 +89,7 @@ const Checkout = () => {
           <Input type="text" label="Postal Code" id="postal-code" />
           <Input type="text" label="City" id="city" />
         </div>
-        <p className="modal-actions">
-          <Button type="button" textonly onClick={handleCheckoutClose}>
-            Close
-          </Button>
-          <Button textonly>Submit order</Button>
-        </p>
+        <p className="modal-actions">{actions}</p>
       </form>
     </Modal>
   );

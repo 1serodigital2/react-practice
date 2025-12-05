@@ -15,11 +15,13 @@ const useHttp = (url, config, initialData) => {
   const [error, setError] = useState();
 
   const sendRequest = useCallback(
-    async function sendRequest() {
+    async function sendRequest(data) {
+      console.log("sending data", data);
+
       setIsLoading(true);
       try {
-        const response = await sendHttpRequest(url, config);
-        return setResData(response);
+        const response = await sendHttpRequest(url, { ...config, body: data });
+        setResData(response);
       } catch (error) {
         setError(error.message || "Fatal error, something went wrong");
       }

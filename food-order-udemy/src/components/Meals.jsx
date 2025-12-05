@@ -11,7 +11,7 @@ const Meals = () => {
     data: loadedMeals,
     isLoading,
     error,
-  } = useHttp("http://localhost:3000/mealseee", requestConfig, []);
+  } = useHttp("http://localhost:3000/meals", requestConfig, []);
 
   console.log("meals data", loadedMeals);
 
@@ -39,7 +39,7 @@ const Meals = () => {
   // console.log("meals", loadedMeals);
 
   if (isLoading) {
-    return <p>Fetching products...</p>;
+    return <p className="center">Fetching products...</p>;
   }
 
   if (error) {
