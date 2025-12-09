@@ -6,6 +6,7 @@ import Button from "./UI/Button";
 import UserProgressContext from "../store/UserProgressContext";
 import Modal from "./UI/Modal";
 import useHttp from "../hooks/useHttp";
+import Error from "./Error";
 
 const Checkout = () => {
   const requestConfig = {
@@ -18,6 +19,7 @@ const Checkout = () => {
     sendRequest,
     isLoading: isSending,
     error,
+    data,
   } = useHttp("http://localhost:3000/orders", requestConfig);
 
   const cartCtx = useContext(CartContext);
@@ -27,7 +29,7 @@ const Checkout = () => {
 
   const userProgressCtx = useContext(UserProgressContext);
 
-  const handleCheckoutClose = () => {
+  const handleClose = () => {
     userProgressCtx.hideCheckout();
   };
 
@@ -37,48 +39,48 @@ const Checkout = () => {
     const fd = new FormData(event.target);
     const customerData = Object.fromEntries(fd.entries());
 
-    sendRequest(
-      JSON.stringify({
-        order: {
-          items: cartCtx.items,
-          customer: customerData,
-        },
-      })
-    );
+    sendRequest({
+      order: {
+        items: cartCtx.items,
+        customer: customerData,
+      },
+    });
+  };
 
-    // fetch("http://localhost:3000/orders", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     order: {
-    //       items: cartCtx.items,
-    //       customer: customerData,
-    //     },
-    //   }),
-    // });
+  const handleClearCart = () => {
+    cartCtx.clearCart();
   };
 
   let actions = (
     <>
-      <Button type="button" textonly onClick={handleCheckoutClose}>
+      <Button type="button" textOnly onClick={handleClose}>
         Close
       </Button>
-      <Button textonly disabled={isSending}>
-        Submit order
-      </Button>
+      <Button disabled={isSending}>Submit order</Button>
     </>
   );
 
   if (isSending) {
     actions = <span>Submitting order request...</span>;
   }
+  if (data && !error) {
+    handleClearCart();
+    return (
+      <Modal
+        open={userProgressCtx.progress === "checkout"}
+        onClose={handleClose}
+      >
+        <h2>Hurrah!</h2>
+        <p>Your order was created successfully</p>
+        <p className="modal-actions">
+          <Button onClick={handleClose}>Close</Button>
+        </p>
+      </Modal>
+    );
+  }
+
   return (
-    <Modal
-      open={userProgressCtx.progress === "checkout"}
-      onClose={handleCheckoutClose}
-    >
+    <Modal open={userProgressCtx.progress === "checkout"} onClose={handleClose}>
       <form onSubmit={handleFormSubmission}>
         <h2>Checkout</h2>
         <div>Total Price: {currencyFormatter.format(totalPrice)}</div>
@@ -91,6 +93,7 @@ const Checkout = () => {
         </div>
         <p className="modal-actions">{actions}</p>
       </form>
+      {error && <Error title="Failed to submit" message={error} />}
     </Modal>
   );
 };
