@@ -29,6 +29,10 @@ const useHttp = (url, config, initialData) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
+  const clearData = () => {
+    setResData(initialData);
+  };
+
   const sendRequest = useCallback(
     async function sendRequest(bodyData) {
       console.log("sending data", bodyData);
@@ -58,6 +62,7 @@ const useHttp = (url, config, initialData) => {
     isLoading,
     error,
     sendRequest,
+    clearData,
   };
 };
 

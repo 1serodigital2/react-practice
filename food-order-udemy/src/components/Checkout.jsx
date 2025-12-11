@@ -20,6 +20,7 @@ const Checkout = () => {
     isLoading: isSending,
     error,
     data,
+    clearData,
   } = useHttp("http://localhost:3000/orders", requestConfig);
 
   const cartCtx = useContext(CartContext);
@@ -33,22 +34,21 @@ const Checkout = () => {
     userProgressCtx.hideCheckout();
   };
 
-  const handleFormSubmission = (event) => {
-    event.preventDefault();
+  const handleFinish = () => {
+    userProgressCtx.hideCheckout();
+    cartCtx.clearCart();
+    clearData();
+  };
 
-    const fd = new FormData(event.target);
+  const checkoutAction = async (fd) => {
     const customerData = Object.fromEntries(fd.entries());
 
-    sendRequest({
+    await sendRequest({
       order: {
         items: cartCtx.items,
         customer: customerData,
       },
     });
-  };
-
-  const handleClearCart = () => {
-    cartCtx.clearCart();
   };
 
   let actions = (
@@ -64,16 +64,15 @@ const Checkout = () => {
     actions = <span>Submitting order request...</span>;
   }
   if (data && !error) {
-    handleClearCart();
     return (
       <Modal
         open={userProgressCtx.progress === "checkout"}
-        onClose={handleClose}
+        onClose={handleFinish}
       >
         <h2>Hurrah!</h2>
         <p>Your order was created successfully</p>
         <p className="modal-actions">
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleFinish}>Close</Button>
         </p>
       </Modal>
     );
@@ -81,7 +80,7 @@ const Checkout = () => {
 
   return (
     <Modal open={userProgressCtx.progress === "checkout"} onClose={handleClose}>
-      <form onSubmit={handleFormSubmission}>
+      <form action={checkoutAction}>
         <h2>Checkout</h2>
         <div>Total Price: {currencyFormatter.format(totalPrice)}</div>
         <Input type="text" label="Full Name" id="name" />
