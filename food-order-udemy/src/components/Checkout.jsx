@@ -1,4 +1,4 @@
-import { useContext, useDeferredValue } from "react";
+import { useContext, useActionState } from "react";
 import CartContext from "../store/CartContext";
 import { currencyFormatter } from "../utils/currencyFormatter";
 import Input from "./Input";
@@ -17,7 +17,7 @@ const Checkout = () => {
   };
   const {
     sendRequest,
-    isLoading: isSending,
+    // isLoading: isSending,
     error,
     data,
     clearData,
@@ -40,7 +40,7 @@ const Checkout = () => {
     clearData();
   };
 
-  const checkoutAction = async (fd) => {
+  const checkoutAction = async (prevState, fd) => {
     const customerData = Object.fromEntries(fd.entries());
 
     await sendRequest({
@@ -50,6 +50,11 @@ const Checkout = () => {
       },
     });
   };
+
+  const [formState, formAction, isSending] = useActionState(
+    checkoutAction,
+    null
+  );
 
   let actions = (
     <>
@@ -80,7 +85,7 @@ const Checkout = () => {
 
   return (
     <Modal open={userProgressCtx.progress === "checkout"} onClose={handleClose}>
-      <form action={checkoutAction}>
+      <form action={formAction}>
         <h2>Checkout</h2>
         <div>Total Price: {currencyFormatter.format(totalPrice)}</div>
         <Input type="text" label="Full Name" id="name" />
