@@ -4,21 +4,22 @@ import { cartAction } from "../../store";
 import classes from "./CartItem.module.css";
 
 const CartItem = (props) => {
-  const { title, quantity, total, price } = props.item;
+  const { id, title, quantity, total, price } = props.item;
   const dispatch = useDispatch();
 
   const handleCartQuantity = (method = "") => {
     if (method === "increase") {
       dispatch(
         cartAction.addItem({
+          id,
           title,
           quantity,
-          total,
           price,
         })
       );
+      console.log("title", title);
     } else {
-      dispatch(cartAction.removeItem({ title }));
+      dispatch(cartAction.removeItem({ id }));
     }
   };
 

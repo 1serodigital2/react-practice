@@ -13,14 +13,17 @@ const cartSlice = createSlice({
     },
     addItem(state, action) {
       const newItem = action.payload;
+      console.log("action", newItem);
+
       const existingItem = state.cartItems.find(
-        (item) => item.title === newItem.title
+        (item) => item.id === newItem.id
       );
 
       if (existingItem) {
         existingItem.quantity++;
       } else {
         state.cartItems.push({
+          id: newItem.id,
           title: newItem.title,
           price: newItem.price,
           quantity: 1,
@@ -28,17 +31,16 @@ const cartSlice = createSlice({
       }
     },
     removeItem(state, action) {
-      const productTitle = action.payload.title;
+      const productId = action.payload.id;
+      console.log("state", state.cartItems);
 
-      const product = state.cartItems.find(
-        (item) => item.title === productTitle
-      );
+      const product = state.cartItems.find((item) => item.id === productId);
 
       if (product.quantity > 1) {
         product.quantity--;
       } else {
         state.cartItems = state.cartItems.filter(
-          (item) => item.title !== productTitle
+          (item) => item.id !== productId
         );
       }
     },
