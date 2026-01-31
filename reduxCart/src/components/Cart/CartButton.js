@@ -7,7 +7,7 @@ const CartButton = (props) => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalQuantity = cartItems.reduce(
     (accumulator, item) => accumulator + item.quantity,
-    0
+    0,
   );
 
   const handleShowCart = () => {

@@ -15,9 +15,8 @@ const CartItem = (props) => {
           title,
           quantity,
           price,
-        })
+        }),
       );
-      console.log("title", title);
     } else {
       dispatch(cartAction.removeItem({ id }));
     }
