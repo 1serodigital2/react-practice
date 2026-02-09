@@ -1,4 +1,7 @@
+import {useParams} from 'react-router-dom'
+
 const EditEventPage = () => {
-  return <h1>EditEventPage</h1>;
+  const params = useParams();
+  return <h1>EditEventPage ({params.eventSlug})</h1>;
 };
 export default EditEventPage;

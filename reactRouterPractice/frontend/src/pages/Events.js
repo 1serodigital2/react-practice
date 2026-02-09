@@ -1,25 +1,21 @@
-import { Link } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
+import EventsList from "../components/EventsList";
 
-const EVENTS = [
-  { eventId: "ev1", title: "This is dummy event one", slug: "event-one" },
-  { eventId: "ev2", title: "This is dummy event two", slug: "event-two" },
-  { eventId: "ev3", title: "This is dummy event three", slug: "event-three" },
-  { eventId: "ev4", title: "This is dummy event four", slug: "event-four" },
-  { eventId: "ev5", title: "This is dummy event five", slug: "event-five" },
-];
+function EventsPage() {
+  const events = useLoaderData();
 
-const EventsPage = () => {
-  return (
-    <>
-      <ul>
-        {EVENTS.map((event) => (
-          <li key={event.eventId}>
-            <Link to={`/events/${event.slug}`}>{event.title}</Link>
-          </li>
-        ))}
-      </ul>
-    </>
-  );
-};
+  return <EventsList events={events} />;
+}
 
 export default EventsPage;
+
+export const loader = async () => {
+  const response = await fetch("http://localhost:8080/events");
+
+  if (!response.ok) {
+    //
+  } else {
+    const resData = await response.json();
+    return resData.events;
+  }
+};
