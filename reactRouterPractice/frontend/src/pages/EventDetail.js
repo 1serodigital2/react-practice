@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
+import EventItem from "../components/EventItem";
 
 const EventDetailPage = () => {
   const params = useParams();
 
   return (
     <>
-      <h1>EventDetailPage</h1>
+      <EventItem />
       <p>{params.eventSlug}</p>
     </>
   );
