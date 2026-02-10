@@ -4,7 +4,7 @@ const Input = ({ type, label }) => {
       <label htmlFor="">{label}</label>
       <input
         type={type}
-        name={label.trim().toLowerCase()}
+        name={label.trim().toLowerCase().replace(/ /g, "_")}
         // placeholder="Enter full name"
       />
     </>
