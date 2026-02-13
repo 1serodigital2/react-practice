@@ -1,18 +1,39 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { EventsContext } from "../../store/events-context";
-import classes from "./Events.module.css";
+import useFetch from "../../hooks/useFetch";
 
 const EventList = () => {
-  const { events } = useContext(EventsContext);
+  const { events, setEvents } = useContext(EventsContext);
+  const { getEventList, deleteEvent } = useFetch();
+
+  const handleDeleteEvent = (eventId) => {
+    if (confirm("Are you sure you want to delete this event") === true) {
+      deleteEvent(eventId);
+      // getEventList();
+    }
+  };
+  // useEffect(() => {
+  //   handleDeleteEvent();
+  // }, [handleDeleteEvent]);
+
+  useEffect(() => {
+    const getEvents = async () => {
+      const eventsList = await getEventList();
+      console.log("getEvents", eventsList);
+
+      setEvents(eventsList);
+    };
+    getEvents();
+  }, []);
 
   console.log("event context", events);
   return (
     <>
       <h1>Event list</h1>
 
-      {events.length == 0 && <p>No events uploaded yet</p>}
+      {events == "" && <p>No events uploaded yet</p>}
 
-      {events.length > 0 && (
+      {events != "" && (
         <table className="table">
           <thead>
             <tr>
@@ -24,13 +45,18 @@ const EventList = () => {
             </tr>
           </thead>
           <tbody>
-            {events.map((item) => (
-              <tr>
-                <td>{item.eventTitle}</td>
-                <th>{item.eventDate}</th>
-                <th>{item.eventLocation}</th>
+            {events.map((item, key) => (
+              <tr key={key}>
+                {/* {console.log("item", item)} */}
+                <td>01</td>
+                <td>{item.title}</td>
+                <th>{item.date}</th>
+                <th>{item.location}</th>
                 <td>
                   <button>Edit</button>
+                  <button onClick={() => handleDeleteEvent(item.id)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

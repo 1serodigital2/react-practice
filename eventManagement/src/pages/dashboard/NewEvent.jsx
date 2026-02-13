@@ -1,10 +1,13 @@
 import { useActionState, useContext } from "react";
 import { EventsContext } from "../../store/events-context";
+import useFetch from "../../hooks/useFetch";
 
 import Input from "../../components/dashboard/Input";
 
 const NewEventPage = () => {
   const { addEvent, events } = useContext(EventsContext);
+  const { addEventApi } = useFetch();
+
   console.log("updated events", events);
 
   const handleFormSubmit = (prevState, formData) => {
@@ -20,6 +23,7 @@ const NewEventPage = () => {
 
     console.log("errors", errors);
     const enteredValues = {
+      id: crypto.randomUUID(),
       title,
       date,
       location,
@@ -34,13 +38,14 @@ const NewEventPage = () => {
     }
 
     console.log("handleFormSubmit data", enteredValues);
-    addEvent(enteredValues);
+    addEvent(enteredValues); //This will set events in state
+    addEventApi(enteredValues); //This will update events in firebase
   };
 
   const [formState, formAction] = useActionState(handleFormSubmit, {
     error: null,
   });
-  console.log("form state", formState);
+  // console.log("form state", formState);
 
   return (
     <>
