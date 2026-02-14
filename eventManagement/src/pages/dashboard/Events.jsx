@@ -47,8 +47,7 @@ const EventList = () => {
           <tbody>
             {events.map((item, key) => (
               <tr key={key}>
-                {/* {console.log("item", item)} */}
-                <td>01</td>
+                <td>{item.slNo}</td>
                 <td>{item.title}</td>
                 <th>{item.date}</th>
                 <th>{item.location}</th>

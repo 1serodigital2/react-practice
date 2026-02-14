@@ -53,9 +53,12 @@ const EventsContextProvider = ({ children }) => {
     let eventsData = [];
     if (eventsList != "") {
       console.log("events found");
+      let slNo = 0;
 
       for (const key in eventsList) {
+        slNo += 1;
         eventsData.push({
+          slNo: slNo,
           eventId: eventsList[key].id,
           title: eventsList[key].title,
           date: eventsList[key].date,
