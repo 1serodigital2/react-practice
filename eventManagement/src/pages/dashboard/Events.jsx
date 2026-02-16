@@ -1,32 +1,20 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { EventsContext } from "../../store/events-context";
 import useFetch from "../../hooks/useFetch";
 
 const EventList = () => {
-  const { events, setEvents } = useContext(EventsContext);
-  const { getEventList, deleteEvent } = useFetch();
+  const { events } = useContext(EventsContext);
+  console.log("event context", events);
+  const { deleteEvent } = useFetch();
 
   const handleDeleteEvent = (eventId) => {
     if (confirm("Are you sure you want to delete this event") === true) {
+      console.log("delete event id: ", eventId);
+
       deleteEvent(eventId);
-      // getEventList();
     }
   };
-  // useEffect(() => {
-  //   handleDeleteEvent();
-  // }, [handleDeleteEvent]);
 
-  useEffect(() => {
-    const getEvents = async () => {
-      const eventsList = await getEventList();
-      console.log("getEvents", eventsList);
-
-      setEvents(eventsList);
-    };
-    getEvents();
-  }, []);
-
-  console.log("event context", events);
   return (
     <>
       <h1>Event list</h1>
@@ -47,7 +35,7 @@ const EventList = () => {
           <tbody>
             {events.map((item, key) => (
               <tr key={key}>
-                <td>{item.slNo}</td>
+                <td>{key + 1}</td>
                 <td>{item.title}</td>
                 <th>{item.date}</th>
                 <th>{item.location}</th>

@@ -1,7 +1,9 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
+import useFetch from "../hooks/useFetch";
 
 export const EventsContext = createContext({
   events: [],
+  loading: false,
   setEvents: () => {},
   addEvent: () => {},
   editEvents: () => {},
@@ -23,7 +25,7 @@ const eventsReducer = (state, action) => {
       };
 
     case "SET_EVENTS_LIST":
-      console.log("SET_EVENTS_LIST", action.payload);
+      console.log("SET_EVENTS_LIST eventsReducer", action.payload);
 
       return {
         events: action.payload,
@@ -33,6 +35,7 @@ const eventsReducer = (state, action) => {
 
 const EventsContextProvider = ({ children }) => {
   const [eventsState, eventsDispatch] = useReducer(eventsReducer, initialState);
+  const { getEventList } = useFetch();
 
   const handleAddEvent = (eventDetail) => {
     console.log("handleAddEvent events list", eventDetail);
@@ -48,25 +51,19 @@ const EventsContextProvider = ({ children }) => {
   };
 
   const handeSetEvents = (eventsList) => {
-    // console.log("handeSetEvents events list", eventsList);
-
     let eventsData = [];
-    if (eventsList != "") {
-      console.log("events found");
-      let slNo = 0;
+    console.log("events found");
+    let slNo = 0;
 
-      for (const key in eventsList) {
-        slNo += 1;
-        eventsData.push({
-          slNo: slNo,
-          eventId: eventsList[key].id,
-          title: eventsList[key].title,
-          date: eventsList[key].date,
-          location: eventsList[key].location,
-        });
-      }
-    } else {
-      console.log("no events found");
+    for (const key in eventsList) {
+      slNo += 1;
+      eventsData.push({
+        slNo: slNo,
+        eventId: eventsList[key].id,
+        title: eventsList[key].title,
+        date: eventsList[key].date,
+        location: eventsList[key].location,
+      });
     }
 
     console.log("Events data after conversion__", eventsData);
@@ -76,6 +73,15 @@ const EventsContextProvider = ({ children }) => {
     });
   };
 
+  useEffect(() => {
+    const getEvents = async () => {
+      const events = await getEventList();
+      handeSetEvents(events);
+    };
+    getEvents();
+  }, []);
+
+  console.log("events fetched: ", eventsState);
   const eventCtxt = {
     events: eventsState.events,
     addEvent: handleAddEvent,
