@@ -3,14 +3,16 @@ import { EventsContext } from "../../store/events-context";
 import useFetch from "../../hooks/useFetch";
 
 const EventList = () => {
-  const { events } = useContext(EventsContext);
+  const { events, handleDelete } = useContext(EventsContext);
   console.log("event context", events);
   const { deleteEvent } = useFetch();
 
   const handleDeleteEvent = (eventId) => {
     if (confirm("Are you sure you want to delete this event") === true) {
       console.log("delete event id: ", eventId);
+      console.log("delete event: ", events);
 
+      handleDelete(eventId);
       deleteEvent(eventId);
     }
   };
@@ -41,7 +43,11 @@ const EventList = () => {
                 <th>{item.location}</th>
                 <td>
                   <button>Edit</button>
-                  <button onClick={() => handleDeleteEvent(item.id)}>
+                  <button
+                    onClick={() =>
+                      handleDeleteEvent(item?.firebaseKey || item?.id)
+                    }
+                  >
                     Delete
                   </button>
                 </td>

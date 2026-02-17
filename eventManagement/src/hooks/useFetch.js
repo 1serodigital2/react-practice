@@ -28,25 +28,40 @@ const useFetch = () => {
 
       const resData = await response.json();
 
-      console.log("fetched events list", resData);
-      return resData;
+      let loadedEvents = [];
+
+      for (const key in resData) {
+        loadedEvents.push({
+          firebaseKey: key,
+          ...resData[key],
+        });
+      }
+
+      console.log("fetched events list", loadedEvents);
+      return loadedEvents;
     } catch (error) {
       console.log("error", error);
     }
   };
 
   const deleteEvent = async (eventId) => {
-    const response = await fetch(`${BASE_URL}.json`, {
-      method: "DELETE",
-      header: { "Content-Type": "application/json" },
-      body: JSON.stringify(eventId),
-    });
+    try {
+      console.log("deleteEvent event trigered", eventId);
 
-    if (!response.ok) {
-      throw new Error("Unable to delete");
+      const response = await fetch(`${BASE_URL}/${eventId}.json`, {
+        method: "DELETE",
+      });
+
+      console.log("deleteEvent response ", response);
+      if (!response.ok) {
+        throw new Error("Unable to delete");
+      }
+      return true;
+    } catch (error) {
+      console.log(" deleteEvent Something went wrong");
+
+      throw error;
     }
-
-    return true;
   };
 
   return {

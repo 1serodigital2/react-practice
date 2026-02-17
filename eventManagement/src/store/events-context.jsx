@@ -30,6 +30,19 @@ const eventsReducer = (state, action) => {
       return {
         events: action.payload,
       };
+
+    case "DELETE_EVENT": {
+      const latestEvents = state.events.filter(
+        (event) => event.firebaseKey !== action.payload,
+      );
+
+      console.log("latestEvents", latestEvents);
+
+      return {
+        ...state,
+        events: latestEvents,
+      };
+    }
   }
 };
 
@@ -51,25 +64,18 @@ const EventsContextProvider = ({ children }) => {
   };
 
   const handeSetEvents = (eventsList) => {
-    let eventsData = [];
-    console.log("events found");
-    let slNo = 0;
-
-    for (const key in eventsList) {
-      slNo += 1;
-      eventsData.push({
-        slNo: slNo,
-        eventId: eventsList[key].id,
-        title: eventsList[key].title,
-        date: eventsList[key].date,
-        location: eventsList[key].location,
-      });
-    }
-
-    console.log("Events data after conversion__", eventsData);
     eventsDispatch({
       type: "SET_EVENTS_LIST",
-      payload: eventsData,
+      payload: eventsList,
+    });
+  };
+
+  const handleDelete = (eventId) => {
+    console.log("eventstate", eventsState);
+
+    eventsDispatch({
+      type: "DELETE_EVENT",
+      payload: eventId,
     });
   };
 
@@ -86,6 +92,7 @@ const EventsContextProvider = ({ children }) => {
     events: eventsState.events,
     addEvent: handleAddEvent,
     setEvents: handeSetEvents,
+    handleDelete,
   };
 
   return (
