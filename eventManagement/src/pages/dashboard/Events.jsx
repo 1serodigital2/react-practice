@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { EventsContext } from "../../store/events-context";
 import useFetch from "../../hooks/useFetch";
@@ -42,7 +43,9 @@ const EventList = () => {
                 <th>{item.date}</th>
                 <th>{item.location}</th>
                 <td>
-                  <button>Edit</button>
+                  <button>
+                    <Link to={`/dashboard/edit/${item.firebaseKey}`}>Edit</Link>
+                  </button>
                   <button
                     onClick={() =>
                       handleDeleteEvent(item?.firebaseKey || item?.id)

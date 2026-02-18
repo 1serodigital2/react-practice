@@ -4,8 +4,6 @@ const BASE_URL =
 const useFetch = () => {
   // 🔹 POST
   const addEventApi = async (eventData) => {
-    console.log("addEventApi", eventData);
-
     const response = await fetch(`${BASE_URL}.json`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

@@ -1,6 +1,7 @@
 import { createContext, useReducer, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const EventsContext = createContext({
   events: [],
   loading: false,
@@ -48,19 +49,29 @@ const eventsReducer = (state, action) => {
 
 const EventsContextProvider = ({ children }) => {
   const [eventsState, eventsDispatch] = useReducer(eventsReducer, initialState);
-  const { getEventList } = useFetch();
+  const { getEventList, addEventApi } = useFetch();
 
-  const handleAddEvent = (eventDetail) => {
-    console.log("handleAddEvent events list", eventDetail);
-    eventsDispatch({
-      type: "CREATE_NEW_EVENT",
-      payload: {
-        id: eventDetail.id,
-        title: eventDetail.title,
-        date: eventDetail.date,
-        location: eventDetail.location,
-      },
-    });
+  const handleAddEvent = async (eventDetail) => {
+    try {
+      const response = await addEventApi(eventDetail);
+
+      if (!response.name) {
+        throw new Error("Unable to create event in firebase");
+      }
+
+      eventsDispatch({
+        type: "CREATE_NEW_EVENT",
+        payload: {
+          firebaseKey: response.name,
+          id: eventDetail.id,
+          title: eventDetail.title,
+          date: eventDetail.date,
+          location: eventDetail.location,
+        },
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   const handeSetEvents = (eventsList) => {
@@ -81,6 +92,8 @@ const EventsContextProvider = ({ children }) => {
 
   useEffect(() => {
     const getEvents = async () => {
+      console.log("events fetching from firebase");
+
       const events = await getEventList();
       handeSetEvents(events);
     };

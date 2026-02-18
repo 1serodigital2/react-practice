@@ -1,8 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import Dashboard from "./pages/dashboard/Home";
 import NewEventPage from "./pages/dashboard/NewEvent";
 import DashboardRootLayout from "./layouts/DashboardRootLayout";
 import EventList from "./pages/dashboard/Events";
+import EditEventPage from "./pages/dashboard/EditEvent";
 
 import FrontendRootLayout from "./layouts/FrontedEndRootLayout";
 import HomePage from "./pages/fontend/Home";
@@ -27,6 +29,7 @@ function App() {
         { index: true, element: <Dashboard /> },
         { path: "events", element: <EventList /> },
         { path: "new", element: <NewEventPage /> },
+        { path: "edit/:eventKey", element: <EditEventPage /> },
       ],
     },
   ]);
