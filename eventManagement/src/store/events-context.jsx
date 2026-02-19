@@ -9,6 +9,7 @@ export const EventsContext = createContext({
   addEvent: () => {},
   editEvents: () => {},
   deleteEvents: () => {},
+  updateEvent: () => {},
 });
 
 const initialState = {
@@ -44,12 +45,22 @@ const eventsReducer = (state, action) => {
         events: latestEvents,
       };
     }
+
+    case "UPDATE_EVENT": {
+      const updatedEvents = state.events.map((event) =>
+        event.firebaseKey === action.payload.firebaseKey
+          ? action.payload
+          : event,
+      );
+
+      return { ...state, events: updatedEvents };
+    }
   }
 };
 
 const EventsContextProvider = ({ children }) => {
   const [eventsState, eventsDispatch] = useReducer(eventsReducer, initialState);
-  const { getEventList, addEventApi } = useFetch();
+  const { getEventList, addEventApi, updateEvent } = useFetch();
 
   const handleAddEvent = async (eventDetail) => {
     try {
@@ -71,6 +82,23 @@ const EventsContextProvider = ({ children }) => {
       });
     } catch (error) {
       console.log("error", error);
+    }
+  };
+
+  const handleUpdateEvent = async (eventDetail) => {
+    try {
+      const response = await updateEvent(eventDetail);
+      console.log("handleUpdateEvent", response);
+
+      if (!response.ok) {
+        throw new Error("unable to update");
+      }
+      eventsDispatch({
+        type: "UPDATE_EVENT",
+        payload: eventDetail,
+      });
+    } catch (error) {
+      console.log("update error", error);
     }
   };
 
@@ -106,6 +134,7 @@ const EventsContextProvider = ({ children }) => {
     addEvent: handleAddEvent,
     setEvents: handeSetEvents,
     handleDelete,
+    updateEvent: handleUpdateEvent,
   };
 
   return (

@@ -62,10 +62,27 @@ const useFetch = () => {
     }
   };
 
+  const updateEvent = async (eventDetail) => {
+    const response = await fetch(
+      `${BASE_URL}/${eventDetail.firebaseKey}.json`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventDetail),
+      },
+    );
+
+    console.log("update response", response);
+    return response;
+  };
+
   return {
     addEventApi,
     getEventList,
     deleteEvent,
+    updateEvent,
   };
 };
 
