@@ -11,8 +11,6 @@ const EditEventPage = () => {
   const editableEvent = events.find(
     (event) => event.firebaseKey === params.eventKey,
   );
-  console.log("params", params);
-  console.log("editableEvent", editableEvent);
 
   const updateEventAction = (prevState, formData) => {
     const title = formData.get("name");

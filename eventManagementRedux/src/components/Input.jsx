@@ -1,4 +1,4 @@
-const Input = ({ label, type, defaultValue }) => {
+const Input = ({ label, type, value, handleChange }) => {
   return (
     <>
       <div>
@@ -6,7 +6,8 @@ const Input = ({ label, type, defaultValue }) => {
         <input
           type={type}
           name={label.toLowerCase().trim()}
-          defaultValue={defaultValue}
+          value={value}
+          onChange={handleChange}
         />
       </div>
     </>

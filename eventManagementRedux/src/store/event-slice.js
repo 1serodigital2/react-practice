@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  eventChanged: false,
   events: [],
 };
 
@@ -12,9 +13,18 @@ const eventSlice = createSlice({
       console.log("state", state);
       console.log("action", action);
 
+      state.eventChanged = true;
       state.events.push(action.payload);
 
       console.log("events after push", state.events);
+    },
+
+    toggleEventChange(state, action) {
+      state.eventChanged = action.payload;
+    },
+
+    setEvents(state, action) {
+      state.events = action.payload;
     },
   },
 });

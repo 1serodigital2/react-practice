@@ -18,8 +18,7 @@ const NewEventPage = () => {
     if (title == "" || title.length < 4) {
       errors.push("Title is required");
     }
-
-    console.log("errors", errors);
+    
     const enteredValues = {
       id: crypto.randomUUID(),
       title,

@@ -1,69 +1,84 @@
 import { useDispatch } from "react-redux";
-import { useActionState } from "react";
-import { eventAction } from "../store";
+import { useState } from "react";
+import { addEventsFirebasae } from "../store/event-actions";
 
 import Input from "../components/Input";
 
 const NewEventPage = () => {
-  const dispatch = useDispatch();
-  const handleFormAction = (prevState, formData) => {
-    const name = formData.get("name");
-    const date = formData.get("date");
-    const location = formData.get("location");
-
-    let errors = [];
-
-    const enteredValues = {
-      name,
-      date,
-      location,
-    };
-
-    if (enteredValues.name.length <= 4) {
-      errors.push("enter valid name");
-    }
-
-    if (errors.length > 0) {
-      return {
-        errors,
-        enteredValues,
-      };
-    }
-
-    console.log("enteredValues", enteredValues);
-    dispatch(eventAction.addEvents({ ...enteredValues }));
-    return {
-      errors,
-      enteredValues,
-    };
-  };
-  const [formState, formAction] = useActionState(handleFormAction, {
-    errors: null,
+  const [errors, setErrors] = useState([]);
+  const [eventDetail, setEventDetail] = useState({
+    name: "",
+    date: "",
+    location: "",
   });
 
-  console.log("form state", formState.enteredValues?.name);
+  const dispatch = useDispatch();
+
+  const handleFormSubmission = (event) => {
+    try {
+      event.preventDefault();
+      console.log("event", event.target.name.value);
+
+      let errors = [];
+
+      if (eventDetail.name.trim().length <= 4) {
+        errors.push("enter valid name");
+      }
+
+      if (errors.length > 0) {
+        setErrors(errors);
+        return;
+      }
+      dispatch(addEventsFirebasae(eventDetail));
+      setEventDetail({
+        name: "",
+        date: "",
+        location: "",
+      });
+      setErrors([]);
+    } catch (error) {
+      console.error("fatal error", error);
+    }
+  };
+
+  const handleFormData = (event) => {
+    console.log("handleFormReset", event);
+
+    const { name, value } = event.target;
+
+    setEventDetail((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
+  };
 
   return (
     <>
       <h1>New Event</h1>
-      <form>
+      <form onSubmit={handleFormSubmission}>
         <Input
           label="Name"
           type="text"
-          defaultValue={formState.enteredValues?.name}
+          value={eventDetail?.name}
+          handleChange={handleFormData}
         />
         <Input
           label="Date"
           type="date"
-          defaultValue={formState.enteredValues?.date}
+          value={eventDetail?.date}
+          handleChange={handleFormData}
         />
         <Input
           label="Location"
           type="text"
-          defaultValue={formState.enteredValues?.location}
+          value={eventDetail?.location}
+          handleChange={handleFormData}
         />
-        <button formAction={formAction}>Submit</button>
+        <button>Submit</button>
       </form>
+      {errors && <p>{errors}</p>}
     </>
   );
 };
