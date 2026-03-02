@@ -1,4 +1,4 @@
-import { eventAction } from ".";
+import { eventAction } from "./";
 import { uiAction } from "./ui-slice";
 
 const BASE_URL =
@@ -36,6 +36,7 @@ export const addEventsFirebasae = (event) => {
       if (!resData.name) {
         throw new Error("Firebase did not return an ID");
       }
+
       return resData;
     };
 
@@ -114,6 +115,52 @@ export const getEventsFirebase = () => {
         }),
       );
       console.error("Fatal error in getEventsFirebase", error);
+    }
+  };
+};
+
+export const deleteEventFirebase = (eventId) => {
+  return async (dispatch) => {
+    dispatch(
+      uiAction.showNotification({
+        status: "pending",
+        title: "Deleting event",
+        message: "Event is being deleted",
+      }),
+    );
+
+    try {
+      const response = await fetch(`${BASE_URL}/reduxEvent.json`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventId),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error while deleting event");
+      }
+
+      const resData = await response.json();
+
+      dispatch(
+        uiAction.showNotification({
+          status: "success",
+          title: "HURRAH!",
+          message: "Event deleted successfully",
+        }),
+      );
+      return resData;
+    } catch (error) {
+      console.error("Unable to delete event", error);
+      dispatch(
+        uiAction.showNotification({
+          status: "error",
+          title: "OOPS!",
+          message: "Something went wrong",
+        }),
+      );
     }
   };
 };

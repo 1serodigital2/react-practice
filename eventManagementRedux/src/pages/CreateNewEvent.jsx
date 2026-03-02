@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { addEventsFirebasae } from "../store/event-actions";
+import { addEventsFirebasae, getEventsFirebase } from "../store/event-actions";
 
 import Input from "../components/Input";
 
@@ -14,7 +14,7 @@ const NewEventPage = () => {
 
   const dispatch = useDispatch();
 
-  const handleFormSubmission = (event) => {
+  const handleFormSubmission = async (event) => {
     try {
       event.preventDefault();
       console.log("event", event.target.name.value);
@@ -29,7 +29,8 @@ const NewEventPage = () => {
         setErrors(errors);
         return;
       }
-      dispatch(addEventsFirebasae(eventDetail));
+      await dispatch(addEventsFirebasae(eventDetail));
+      dispatch(getEventsFirebase());
       setEventDetail({
         name: "",
         date: "",
