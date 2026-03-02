@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   eventChanged: false,
+  processing: false,
   events: [],
 };
 
