@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getEventsFirebase, deleteEventFirebase } from "../store/event-actions";
@@ -6,7 +7,6 @@ import { eventAction } from "../store";
 const EventsPage = () => {
   const dispatch = useDispatch();
   const eventsList = useSelector((state) => state.events.events);
-  const eventChanged = useSelector((state) => state.events.eventChanged);
   const notification = useSelector((state) => state.ui.notification);
   const shouldFetch = useSelector((state) => state.events.shouldFetch);
 
@@ -14,7 +14,6 @@ const EventsPage = () => {
     console.log("rendered");
     if (shouldFetch) {
       dispatch(getEventsFirebase());
-      dispatch(eventAction.toggleEventChange(false));
       dispatch(eventAction.toggleShouldFetch(false));
     }
   }, []);
@@ -67,7 +66,7 @@ const EventsPage = () => {
                 <td>{item.location}</td>
                 <td>{item.date}</td>
                 <td>
-                  <button>Edit</button>
+                  <button><Link to={`/edit/${item.eventId}`}>Edit</Link></button>
                   <button onClick={() => handleDeleteEvent(item.eventId)}>
                     Delete
                   </button>

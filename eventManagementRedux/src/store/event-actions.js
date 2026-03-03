@@ -130,7 +130,7 @@ export const deleteEventFirebase = (eventId) => {
     );
 
     try {
-      const response = await fetch(`${BASE_URL}/reduxEvent.json`, {
+      const response = await fetch(`${BASE_URL}/reduxEvent/${eventId}.json`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -161,6 +161,49 @@ export const deleteEventFirebase = (eventId) => {
           message: "Something went wrong",
         }),
       );
+    }
+  };
+};
+
+export const updateEventFirebase = (eventDetail) => {
+  return async (dispatch) => {
+    console.log("updateEventFirebase", eventDetail);
+
+    dispatch(
+      uiAction.showNotification({
+        status: "pending",
+        title: "Processing",
+        message: "Event is being updated",
+      }),
+    );
+
+    const updateEvent = async (event) => {
+      const response = await fetch(
+        `${BASE_URL}/reduxEvent/${event.eventId}.json`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: event.name,
+            date: event.date,
+            location: event.location,
+          }),
+        },
+      );
+      if (!response.ok) {
+        throw new Error("Unable to update event");
+      }
+
+      const resData = await response.json();
+      return resData;
+    };
+
+    try {
+      updateEvent(eventDetail);
+    } catch (error) {
+      console.error("somethign went wrong while updating event", error);
     }
   };
 };
