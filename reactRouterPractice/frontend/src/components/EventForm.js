@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 
 import classes from "./EventForm.module.css";
 
@@ -65,7 +65,11 @@ function EventForm({ method, event }) {
   };
 
   return (
-    <form onSubmit={handleFormSubmission} className={classes.form}>
+    <Form
+      method="post"
+      // onSubmit={handleFormSubmission}
+      className={classes.form}
+    >
       <p>
         <label htmlFor="title">Title</label>
         <input
@@ -116,7 +120,7 @@ function EventForm({ method, event }) {
         </button>
         <button type="submit">Save</button>
       </div>
-    </form>
+    </Form>
   );
 }
 

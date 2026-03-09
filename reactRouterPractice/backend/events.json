@@ -1,6 +1,13 @@
 {
   "events": [
     {
+      "title": "kalimpont tour",
+      "date": "2026-04-05",
+      "image": "https://media.istockphoto.com/id/517188688/photo/mountain-landscape.jpg?s=612x612&w=0&k=20&c=A63koPKaCyIwQWOTFBRWXj_PwCrR4cEoOw2S9Q7yVl8=",
+      "description": "sdfsdfsdf",
+      "id": "1cd72fc6-d30a-4b5f-a0ca-cba8c4f65d67"
+    },
+    {
       "id": "bbc01a41-0c7a-4820-a952-873030082dfb",
       "title": "A dummy eventsdf",
       "date": "2023-02-22",
