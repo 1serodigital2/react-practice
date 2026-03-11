@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, useNavigate } from "react-router-dom";
+import { Form, useNavigate, useNavigation } from "react-router-dom";
 
 import classes from "./EventForm.module.css";
 
@@ -17,6 +17,10 @@ function EventForm({ method, event }) {
   }, []);
 
   const navigate = useNavigate();
+  const navigation = useNavigation();
+
+  const isSubmitting = navigation.state === "submitting";
+
   function cancelHandler() {
     navigate("..");
   }
@@ -31,45 +35,8 @@ function EventForm({ method, event }) {
     });
   };
 
-  const handleFormSubmission = async (e) => {
-    e.preventDefault();
-    try {
-      if (
-        eventData.title === "" ||
-        eventData.date === "" ||
-        eventData.description === "" ||
-        eventData.image === ""
-      ) {
-        throw new Error("Please fill up all the required fields");
-      }
-
-      const response = await fetch("http://localhost:8080/events", {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(eventData),
-      });
-
-      console.log("submitting event", response);
-
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-
-      const resData = response.json();
-      return resData;
-    } catch (error) {
-      console.error("handleFormSubmission", error);
-    }
-  };
-
   return (
-    <Form
-      method="post"
-      // onSubmit={handleFormSubmission}
-      className={classes.form}
-    >
+    <Form method="post" className={classes.form}>
       <p>
         <label htmlFor="title">Title</label>
         <input
@@ -77,7 +44,8 @@ function EventForm({ method, event }) {
           type="text"
           name="title"
           required
-          value={eventData?.title}
+          // value={eventData?.title}
+          defaultValue={event ? event.title : ""}
           onChange={handleOnChange}
         />
       </p>
@@ -87,7 +55,8 @@ function EventForm({ method, event }) {
           id="image"
           type="url"
           name="image"
-          value={eventData?.image}
+          // value={eventData?.image}
+          defaultValue={event ? event.image : ""}
           required
           onChange={handleOnChange}
         />
@@ -99,7 +68,8 @@ function EventForm({ method, event }) {
           type="date"
           name="date"
           required
-          value={eventData?.date}
+          // value={eventData?.date}
+          defaultValue={event ? event.date : ""}
           onChange={handleOnChange}
         />
       </p>
@@ -110,15 +80,18 @@ function EventForm({ method, event }) {
           name="description"
           rows="5"
           required
-          value={eventData?.description}
+          // value={eventData?.description}
+          defaultValue={event ? event.description : ""}
           onChange={handleOnChange}
         />
       </p>
       <div className={classes.actions}>
-        <button type="button" onClick={cancelHandler}>
+        <button type="button" onClick={cancelHandler} disabled={isSubmitting}>
           Cancel
         </button>
-        <button type="submit">Save</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Submitting..." : "Save"}
+        </button>
       </div>
     </Form>
   );

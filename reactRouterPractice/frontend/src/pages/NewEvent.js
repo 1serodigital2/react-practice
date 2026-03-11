@@ -1,4 +1,4 @@
-import { json } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import EventForm from "../components/EventForm";
 
 const NewEventPage = () => {
@@ -34,7 +34,5 @@ export const action = async ({ request, params }) => {
   if (!response.ok) {
     throw new Error("Unable to send event data");
   }
-
-  const resData = await response.json();
-  return resData;
+  return redirect("/events");
 };
