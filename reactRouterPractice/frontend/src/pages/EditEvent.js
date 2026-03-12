@@ -9,7 +9,7 @@ const EditEventPage = () => {
   return (
     <>
       <h1>EditEventPage ({params.eventSlug})</h1>
-      <EventForm method="PATCH" event={event} />
+      <EventForm method="patch" event={event} />
     </>
   );
 };
