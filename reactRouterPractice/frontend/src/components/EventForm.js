@@ -128,7 +128,7 @@ export const action = async ({ request, params }) => {
 
   if (method === "PATCH") {
     const eventId = params.eventSlug;
-    url = "http://localhost:8080/events" + eventId;
+    url = "http://localhost:8080/events/" + eventId;
   }
 
   const response = await fetch(url, {
