@@ -16,7 +16,7 @@ export default EventDetailPage;
 
 export const loader = async ({ request, params }) => {
   const response = await fetch(
-    `http://localhost:8080/events/${params.eventSlug}`,
+    `http://localhost:8080/events/${params.eventId}`,
   );
   if (!response.ok) {
     throw new Response("Unable to get event", { status: response.status });
@@ -28,7 +28,7 @@ export const loader = async ({ request, params }) => {
 export const deleteEvent = async ({ params, request }) => {
   console.log("params", params);
 
-  const eventId = params.eventSlug;
+  const eventId = params.eventId;
   const response = await fetch("http://localhost:8080/events/" + eventId, {
     method: request.method,
   });
