@@ -1,3 +1,5 @@
+import { redirect } from "react-router-dom";
+
 import AuthForm from "../components/AuthForm";
 
 function AuthenticationPage() {
@@ -17,7 +19,6 @@ export const action = async ({ request, params }) => {
       password: formData.get("password"),
     };
 
-    console.log("form Data", authData);
     const response = await fetch("http://localhost:8080/" + mode, {
       method: "POST",
       headers: {
@@ -26,13 +27,22 @@ export const action = async ({ request, params }) => {
       body: JSON.stringify(authData),
     });
 
+    if (response.status === 422 || response.status === 401) {
+      console.log("error", response);
+      return response;
+    }
+
     if (!response.ok) {
       throw new Response({ message: `Unable to ${mode}` }, { status: 403 });
     }
 
-    const resData = response.json();
+    const resData = await response.json();
+    const token = resData.token;
+    localStorage.setItem("token", token);
+
     console.log("login resData", resData);
-    return resData;
+    return redirect("/");
+    // return resData;
   } catch (error) {
     console.error("Critical login error", error);
   }
