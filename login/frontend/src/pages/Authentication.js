@@ -40,6 +40,10 @@ export const action = async ({ request, params }) => {
     const token = resData.token;
     localStorage.setItem("token", token);
 
+    const expiration = new Date();
+    expiration.setHours(expiration.getHours() + 1);
+    localStorage.setItem("expirationDate", expiration.toISOString());
+
     console.log("login resData", resData);
     return redirect("/");
     // return resData;
