@@ -22,20 +22,15 @@ app.use((req, res, next) => {
 });
 
 app.get("/events", async (req, res) => {
-  console.log("event req", req);
   const { max, search } = req.query;
   const eventsFileContent = await fs.readFile("./data/events.json");
   let events = JSON.parse(eventsFileContent);
 
   if (search) {
-    console.log("searched", search);
-
     events = events.filter((event) => {
       const searchableText = `${event.title} ${event.description} ${event.location}`;
       return searchableText.toLowerCase().includes(search.toLowerCase());
     });
-  } else {
-    console.log("no searched");
   }
 
   if (max) {
