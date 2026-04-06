@@ -43,7 +43,10 @@ export default function EventDetails() {
             </nav>
           </header>
           <div id="event-details-content">
-            <img src="" alt="" />
+            <img
+              src={data?.image ? `http://localhost:3000/${data.image}` : ""}
+              alt=""
+            />
             <div id="event-details-info">
               <div>
                 <p id="event-details-location">{data.location}</p>
