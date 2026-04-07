@@ -12,8 +12,8 @@ export default function EditEvent() {
   const id = params.id;
   const navigate = useNavigate();
 
-  const { data } = useQuery({
-    queryKey: ["edit-event", { eventId: id }],
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["event", id],
     queryFn: ({ signal }) => fetchEvent({ id, signal }),
   });
 
