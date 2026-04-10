@@ -7,7 +7,6 @@ import EventForm from "./EventForm.jsx";
 import { fetchEvent, updateEvent, queryClient } from "../../utils/http.js";
 
 import { useQuery } from "@tanstack/react-query";
-import LoadingIndicator from "../UI/LoadingIndicator.jsx";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
 
 export default function EditEvent() {
@@ -15,7 +14,7 @@ export default function EditEvent() {
   const id = params.id;
   const navigate = useNavigate();
 
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isError, error } = useQuery({
     queryKey: ["event", id],
     queryFn: ({ signal }) => fetchEvent({ id, signal }),
   });
@@ -53,26 +52,11 @@ export default function EditEvent() {
   });
 
   function handleSubmit(formData) {
-    // console.log("form data", formData);
-
-    // const title = formData.title;
-
-    // if (!title) {
-    //   return false;
-    // }
     mutate({ id, event: formData });
     navigate("../");
   }
 
   let content;
-
-  if (isPending) {
-    content = (
-      <div className="center">
-        <LoadingIndicator />
-      </div>
-    );
-  }
 
   if (isError) {
     content = (
@@ -114,3 +98,13 @@ export default function EditEvent() {
 
   return <Modal onClose={handleClose}>{content}</Modal>;
 }
+
+export const loader = ({ params }) => {
+  console.log("loader triggered", params);
+
+  const id = params.id;
+  return queryClient.fetchQuery({
+    queryKey: ["event", id],
+    queryFn: ({ signal }) => fetchEvent({ id, signal }),
+  });
+};
