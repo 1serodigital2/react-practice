@@ -11,6 +11,7 @@ import EventDetails from "./components/Events/EventDetails.jsx";
 import NewEvent from "./components/Events/NewEvent.jsx";
 import EditEvent, {
   loader as eventLoader,
+  action as updateEventLoader,
 } from "./components/Events/EditEvent.jsx";
 import { queryClient } from "./utils/http.js";
 
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
         path: "/events/:id/edit",
         element: <EditEvent />,
         loader: eventLoader,
+        action: updateEventLoader,
       },
     ],
   },
