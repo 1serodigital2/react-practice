@@ -13,7 +13,7 @@ const MealsDetailPage = async ({ params }) => {
     notFound();
   }
   meal.instructions = meal.instructions.replace(/\n/g, "<br />");
-  console.log("meal", meal);
+  // console.log("meal", meal);
 
   return (
     <>
