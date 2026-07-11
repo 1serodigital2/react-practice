@@ -4,12 +4,25 @@ import classes from "./page.module.css";
 import { getMeal } from "@/lib/meals";
 import { notFound } from "next/navigation";
 
+export const generateMetadata = async ({ params }) => {
+  const mealParams = await params;
+  const meal = getMeal(mealParams.slug);
+  if (!meal) {
+    notFound();
+  }
+
+  return {
+    title: meal.title,
+    description: meal.summary,
+  };
+};
+
 const MealsDetailPage = async ({ params }) => {
   const mealParams = await params;
   console.log("[MealsDetailPage] paramas", mealParams);
 
   const meal = getMeal(mealParams.slug);
-  if(!meal){
+  if (!meal) {
     notFound();
   }
   meal.instructions = meal.instructions.replace(/\n/g, "<br />");
