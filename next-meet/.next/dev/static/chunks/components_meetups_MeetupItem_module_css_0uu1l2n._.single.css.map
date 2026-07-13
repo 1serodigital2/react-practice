@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/components/meetups/MeetupItem.module.css"],"sourcesContent":[".item {\n  margin: 1rem 0;\n}\n\n.image {\n  width: 100%;\n  height: 20rem;\n  overflow: hidden;\n  border-top-right-radius: 6px;\n  border-top-left-radius: 6px;\n}\n\n.image img {\n  width: 100%;\n  object-fit: cover;\n}\n\n.content {\n  text-align: center;\n  padding: 1rem;\n}\n\n.content h3 {\n  font-size: 1.25rem;\n  color: #2c292b;\n}\n\n.actions {\n  padding: 1.5rem;\n  text-align: center;\n}\n\n.actions button {\n  font: inherit;\n  cursor: pointer;\n  color: #77002e;\n  border: 1px solid #77002e;\n  background-color: transparent;\n  padding: 0.5rem 1.5rem;\n  border-radius: 4px;\n}\n\n.actions button:hover,\n.actions button:active {\n  background-color: #ffe2ed;\n}"],"names":[],"mappings":"AAAA;;;;AAIA;;;;;;;;AAQA;;;;;AAKA;;;;;AAKA;;;;;AAKA;;;;;AAKA;;;;;;;;;;AAUA"}}]
+}

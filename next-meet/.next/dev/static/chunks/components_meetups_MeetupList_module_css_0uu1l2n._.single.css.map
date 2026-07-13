@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/components/meetups/MeetupList.module.css"],"sourcesContent":[".list {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}"],"names":[],"mappings":"AAAA"}}]
+}

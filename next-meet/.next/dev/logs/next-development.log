@@ -1,0 +1,17 @@
+{"timestamp":"00:00:02.130","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:30.251","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in page: \"/\""}
+{"timestamp":"00:00:30.412","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in page: \"/\""}
+{"timestamp":"00:00:31.227","source":"Browser","level":"ERROR","message":"uncaughtError: Error: The default export is not a React Component in page: \"/\""}
+{"timestamp":"00:00:31.265","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mUncaught Error: The default export is not a React Component in page: \\\"/\\\"\\u001b[39m\\n\\u001b[31m    at doRender (file://C:\\\\Users\\\\Joydeb Appycodes\\\\PROJECTS\\\\react-practice\\\\next-meet\\\\.next\\\\dev\\\\server\\\\chunks\\\\ssr\\\\node_modules_1296rhd._.js:6124:54)\\n    at responseGenerator (file://C:\\\\Users\\\\Joydeb Appycodes\\\\PROJECTS\\\\react-practice\\\\next-meet\\\\.next\\\\dev\\\\server\\\\chunks\\\\ssr\\\\node_modules_1296rhd._.js:6332:28)\\n    at async handleResponse (file://C:\\\\Users\\\\Joydeb Appycodes\\\\PROJECTS\\\\react-practice\\\\next-meet\\\\.next\\\\dev\\\\server\\\\chunks\\\\ssr\\\\node_modules_1296rhd._.js:6334:32)\\n    at async Module.handler (file://C:\\\\Users\\\\Joydeb Appycodes\\\\PROJECTS\\\\react-practice\\\\next-meet\\\\.next\\\\dev\\\\server\\\\chunks\\\\ssr\\\\node_modules_1296rhd._.js:6505:17)\\u001b[39m\""}
+{"timestamp":"00:00:31.265","source":"Browser","level":"ERROR","message":"\u001b[31mUncaught Error: The default export is not a React Component in page: \"/\"\u001b[39m\n\u001b[31m    at doRender (file://C:\\Users\\Joydeb Appycodes\\PROJECTS\\react-practice\\next-meet\\.next\\dev\\server\\chunks\\ssr\\node_modules_1296rhd._.js:6124:54)\n    at responseGenerator (file://C:\\Users\\Joydeb Appycodes\\PROJECTS\\react-practice\\next-meet\\.next\\dev\\server\\chunks\\ssr\\node_modules_1296rhd._.js:6332:28)\n    at async handleResponse (file://C:\\Users\\Joydeb Appycodes\\PROJECTS\\react-practice\\next-meet\\.next\\dev\\server\\chunks\\ssr\\node_modules_1296rhd._.js:6334:32)\n    at async Module.handler (file://C:\\Users\\Joydeb Appycodes\\PROJECTS\\react-practice\\next-meet\\.next\\dev\\server\\chunks\\ssr\\node_modules_1296rhd._.js:6505:17)\u001b[39m"}
+{"timestamp":"00:00:49.398","source":"Server","level":"LOG","message":"✓ Compiled in 37ms"}
+{"timestamp":"00:05:13.937","source":"Server","level":"LOG","message":"✓ Compiled in 30ms"}
+{"timestamp":"00:05:14.641","source":"Browser","level":"LOG","message":"Refreshing page data due to server-side change"}
+{"timestamp":"00:05:27.598","source":"Server","level":"LOG","message":"✓ Compiled in 14ms"}
+{"timestamp":"00:05:28.609","source":"Browser","level":"LOG","message":"Refreshing page data due to server-side change"}
+{"timestamp":"00:05:39.369","source":"Server","level":"LOG","message":"✓ Compiled in 11ms"}
+{"timestamp":"00:05:39.617","source":"Browser","level":"LOG","message":"Refreshing page data due to server-side change"}
+{"timestamp":"00:05:53.779","source":"Server","level":"LOG","message":"✓ Compiled in 33ms"}
+{"timestamp":"00:05:54.623","source":"Browser","level":"LOG","message":"Refreshing page data due to server-side change"}
+{"timestamp":"00:07:05.130","source":"Server","level":"LOG","message":"✓ Compiled in 96ms"}
+{"timestamp":"00:07:05.627","source":"Browser","level":"LOG","message":"Refreshing page data due to server-side change"}
