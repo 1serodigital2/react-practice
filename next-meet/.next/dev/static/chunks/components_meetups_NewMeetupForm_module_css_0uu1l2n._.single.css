@@ -1,0 +1,46 @@
+/* [project]/components/meetups/NewMeetupForm.module.css [client] (css) */
+.NewMeetupForm-module__iECCua__form {
+  padding: 1rem;
+}
+
+.NewMeetupForm-module__iECCua__control {
+  margin-bottom: .5rem;
+}
+
+.NewMeetupForm-module__iECCua__control label {
+  margin-bottom: .5rem;
+  font-weight: bold;
+  display: block;
+}
+
+.NewMeetupForm-module__iECCua__control input, .NewMeetupForm-module__iECCua__control textarea {
+  font: inherit;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  padding: .25rem;
+  display: block;
+}
+
+.NewMeetupForm-module__iECCua__actions {
+  text-align: right;
+  margin-top: 1rem;
+}
+
+.NewMeetupForm-module__iECCua__actions button {
+  font: inherit;
+  cursor: pointer;
+  color: #fff;
+  background-color: #77002e;
+  border: 1px solid #77002e;
+  border-radius: 4px;
+  padding: .5rem 1.5rem;
+  font-weight: bold;
+}
+
+.NewMeetupForm-module__iECCua__actions button:hover, .NewMeetupForm-module__iECCua__actions button:active {
+  background-color: #a50e48;
+  border-color: #a50e48;
+}
+
+/*# sourceMappingURL=components_meetups_NewMeetupForm_module_css_0uu1l2n._.single.css.map*/

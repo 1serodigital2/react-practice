@@ -1,0 +1,108 @@
+/* [project]/components/ui/Card.module.css [client] (css) */
+.Card-module__QRy0Sa__card {
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px #0003;
+}
+
+/* [project]/components/meetups/MeetupItem.module.css [client] (css) */
+.MeetupItem-module__CwiWmq__item {
+  margin: 1rem 0;
+}
+
+.MeetupItem-module__CwiWmq__image {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  width: 100%;
+  height: 20rem;
+  overflow: hidden;
+}
+
+.MeetupItem-module__CwiWmq__image img {
+  object-fit: cover;
+  width: 100%;
+}
+
+.MeetupItem-module__CwiWmq__content {
+  text-align: center;
+  padding: 1rem;
+}
+
+.MeetupItem-module__CwiWmq__content h3 {
+  color: #2c292b;
+  font-size: 1.25rem;
+}
+
+.MeetupItem-module__CwiWmq__actions {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.MeetupItem-module__CwiWmq__actions button {
+  font: inherit;
+  cursor: pointer;
+  color: #77002e;
+  background-color: #0000;
+  border: 1px solid #77002e;
+  border-radius: 4px;
+  padding: .5rem 1.5rem;
+}
+
+.MeetupItem-module__CwiWmq__actions button:hover, .MeetupItem-module__CwiWmq__actions button:active {
+  background-color: #ffe2ed;
+}
+
+/* [project]/components/meetups/MeetupList.module.css [client] (css) */
+.MeetupList-module__TBxPNG__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* [project]/components/layout/MainNavigation.module.css [client] (css) */
+.MainNavigation-module__0PBqdq__header {
+  background-color: #77002e;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 5rem;
+  padding: 0 10%;
+  display: flex;
+}
+
+.MainNavigation-module__0PBqdq__logo {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.MainNavigation-module__0PBqdq__header ul {
+  align-items: baseline;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.MainNavigation-module__0PBqdq__header li {
+  margin-left: 3rem;
+}
+
+.MainNavigation-module__0PBqdq__header a {
+  color: #fcb8d2;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.MainNavigation-module__0PBqdq__header a:hover, .MainNavigation-module__0PBqdq__header a:active, .MainNavigation-module__0PBqdq__header a.MainNavigation-module__0PBqdq__active {
+  color: #fff;
+}
+
+/* [project]/components/layout/Layout.module.css [client] (css) */
+.Layout-module__saeABG__main {
+  width: 90%;
+  max-width: 40rem;
+  margin: 3rem auto;
+}
+
+/*# sourceMappingURL=components_14-9voh._.css.map*/

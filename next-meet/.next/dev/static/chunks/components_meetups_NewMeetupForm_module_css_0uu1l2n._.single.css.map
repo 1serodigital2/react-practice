@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/components/meetups/NewMeetupForm.module.css"],"sourcesContent":[".form {\n  padding: 1rem;\n}\n\n.control {\n  margin-bottom: 0.5rem;\n}\n\n.control label {\n  display: block;\n  font-weight: bold;\n  margin-bottom: 0.5rem;\n}\n\n.control input,\n.control textarea {\n  display: block;\n  font: inherit;\n  border-radius: 4px;\n  border: 1px solid #ccc;\n  padding: 0.25rem;\n  width: 100%;\n}\n\n.actions {\n  margin-top: 1rem;\n  text-align: right;\n}\n\n.actions button {\n  font: inherit;\n  cursor: pointer;\n  background-color: #77002e;\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border: 1px solid #77002e;\n  border-radius: 4px;\n  font-weight: bold;\n}\n\n.actions button:hover,\n.actions button:active {\n  background-color: #a50e48;\n  border-color: #a50e48;\n}"],"names":[],"mappings":"AAAA;;;;AAIA;;;;AAIA;;;;;;AAMA;;;;;;;;;AAUA;;;;;AAKA;;;;;;;;;;;AAWA"}}]
+}

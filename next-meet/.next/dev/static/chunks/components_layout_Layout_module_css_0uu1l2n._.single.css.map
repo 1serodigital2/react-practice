@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/components/layout/Layout.module.css"],"sourcesContent":[".main {\n  margin: 3rem auto;\n  width: 90%;\n  max-width: 40rem;\n}"],"names":[],"mappings":"AAAA"}}]
+}

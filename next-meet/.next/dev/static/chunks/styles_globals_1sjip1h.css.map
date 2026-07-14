@@ -2,5 +2,5 @@
   "version": 3,
   "sources": [],
   "sections": [
-    {"offset": {"line": 2, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Joydeb%20Appycodes/PROJECTS/react-practice/next-meet/styles/globals.css"],"sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Open+Sans:wght@400;700&display=swap');\n\n* {\n  box-sizing: border-box;\n}\n\nbody {\n  font-family: 'Open Sans', 'Lato', sans-serif;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-family: 'Lato', sans-serif;\n}"],"names":[],"mappings":"AAEA;;;;AAIA;;;;AAIA"}}]
+    {"offset": {"line": 2, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Joydeb%20Appycodes/PROJECTS/react-practice/next-meet/styles/globals.css"],"sourcesContent":["@import url(\"https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Open+Sans:wght@400;700&display=swap\");\n\n* {\n  box-sizing: border-box;\n}\n\nbody {\n  font-family: \"Open Sans\", \"Lato\", sans-serif;\n  margin: 0;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-family: \"Lato\", sans-serif;\n}\n"],"names":[],"mappings":"AAEA;;;;AAIA;;;;;AAKA"}}]
 }

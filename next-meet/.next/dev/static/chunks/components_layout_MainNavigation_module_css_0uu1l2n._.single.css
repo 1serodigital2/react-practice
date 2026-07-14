@@ -1,0 +1,40 @@
+/* [project]/components/layout/MainNavigation.module.css [client] (css) */
+.MainNavigation-module__0PBqdq__header {
+  background-color: #77002e;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 5rem;
+  padding: 0 10%;
+  display: flex;
+}
+
+.MainNavigation-module__0PBqdq__logo {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.MainNavigation-module__0PBqdq__header ul {
+  align-items: baseline;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.MainNavigation-module__0PBqdq__header li {
+  margin-left: 3rem;
+}
+
+.MainNavigation-module__0PBqdq__header a {
+  color: #fcb8d2;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.MainNavigation-module__0PBqdq__header a:hover, .MainNavigation-module__0PBqdq__header a:active, .MainNavigation-module__0PBqdq__header a.MainNavigation-module__0PBqdq__active {
+  color: #fff;
+}
+
+/*# sourceMappingURL=components_layout_MainNavigation_module_css_0uu1l2n._.single.css.map*/

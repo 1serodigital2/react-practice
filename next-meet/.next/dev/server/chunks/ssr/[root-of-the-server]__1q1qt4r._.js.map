@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Joydeb%20Appycodes/PROJECTS/react-practice/next-meet/pages/new-meetup/index.jsx"],"sourcesContent":["import NewMeetupform from \"../../components/meet/NewMeetupForm\";\r\n\r\nconst NewMeetup = () => {\r\n  return <NewMeetupForm />;\r\n};\r\n\r\nexport default NewMeetup;\r\n"],"names":["NewMeetup","NewMeetupForm"],"mappings":";;;;;;;;;;;;AAEA,MAAMA,YAAY;IAChB,qBAAO,qKAACC;;;;;AACV;uCAEeD"}}]
+}
